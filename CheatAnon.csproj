@@ -10,9 +10,24 @@
     <TranslationClassBuilder_AddGetByKey>true</TranslationClassBuilder_AddGetByKey>
   </PropertyGroup>
 
-  <!-- Exclude legacy shared-project sources; CJB.Common contains the active copies -->
+  <!-- Exclude dev-only files and folders from all build item tracking.
+       Mod source is: ModEntry.cs, Framework/, CJB.Common/, assets/, i18n/, manifest.json -->
   <ItemGroup>
+    <!-- Common/ is an orphaned legacy shared-project; CJB.Common/ has the active copies -->
     <Compile Remove="Common/**/*.cs" />
+    <None Remove="Common/**" />
+
+    <!-- Development and documentation folders (not part of the mod) -->
+    <None Remove="Analysis/**" />
+    <None Remove="Documentation/**" />
+    <None Remove="Research/**" />
+    <None Remove="Patches/**" />
+    <None Remove="docs/**" />
+    <None Remove="Implementation/**" />
+
+    <!-- Root development files -->
+    <None Remove="*.md" />
+    <None Remove="*.code-workspace" />
   </ItemGroup>
 
   <ItemGroup>
