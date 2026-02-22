@@ -1,0 +1,153 @@
+From 62b191356999141eb50f1dbb306b709c2240fc0a Mon Sep 17 00:00:00 2001
+From: Stan <stanbontrager@users.noreply.github.com>
+Date: Wed, 18 Feb 2026 15:53:11 -0500
+Subject: [PATCH 1/5] Phase 1: Add category toggles and progression
+ restrictions to ModConfig
+
+Entry 5 in Project_Development.md:
+
+Added 9 new properties to ModConfig.cs:
+- 8 category master toggles (all default to true for backward compatibility)
+  - EnablePlayerAndTools
+  - EnableFarmAndFishing
+  - EnableRelationships
+  - EnableSkills
+  - EnableTime
+  - EnableWarps
+  - EnableWeather
+  - EnableAdvanced
+
+- 1 progression restriction toggle (defaults to false - unrestricted)
+  - EnforceWarpProgressionRestrictions
+
+Properties organized with clear section comments and XML documentation.
+Backward compatible with existing config.json files.
+No build errors - compilation verified successful.
+
+Next: Phase 2 - Update CheatManager to respect category toggles
+---
+ CJBCheatsMenu.Framework.Models/ModConfig.cs   | 36 +++++++++++
+ .../Project_Development.md                    | 60 +++++++++++++++++++
+ 2 files changed, 96 insertions(+)
+
+diff --git a/CJBCheatsMenu.Framework.Models/ModConfig.cs b/CJBCheatsMenu.Framework.Models/ModConfig.cs
+index 4d42e30..428f006 100644
+--- a/CJBCheatsMenu.Framework.Models/ModConfig.cs
++++ b/CJBCheatsMenu.Framework.Models/ModConfig.cs
+@@ -26,6 +26,42 @@ internal class ModConfig
+ 
+ 	public MenuTab DefaultTab { get; set; }
+ 
++	/****
++	** Category Master Toggles
++	****/
++	/// <summary>Whether Player & Tools cheats are enabled.</summary>
++	public bool EnablePlayerAndTools { get; set; } = true;
++
++	/// <summary>Whether Farm & Fishing cheats are enabled.</summary>
++	public bool EnableFarmAndFishing { get; set; } = true;
++
++	/// <summary>Whether Relationship cheats are enabled.</summary>
++	public bool EnableRelationships { get; set; } = true;
++
++	/// <summary>Whether Skill cheats are enabled.</summary>
++	public bool EnableSkills { get; set; } = true;
++
++	/// <summary>Whether Time cheats are enabled.</summary>
++	public bool EnableTime { get; set; } = true;
++
++	/// <summary>Whether Warp cheats are enabled.</summary>
++	public bool EnableWarps { get; set; } = true;
++
++	/// <summary>Whether Weather cheats are enabled.</summary>
++	public bool EnableWeather { get; set; } = true;
++
++	/// <summary>Whether Advanced cheats are enabled.</summary>
++	public bool EnableAdvanced { get; set; } = true;
++
++	/****
++	** Progression Restrictions
++	****/
++	/// <summary>Whether to enforce progression-based restrictions on warps (e.g., boat repair required for Ginger Island).</summary>
++	public bool EnforceWarpProgressionRestrictions { get; set; } = false;
++
++	/****
++	** Individual Feature Toggles
++	****/
+ 	public int MoveSpeed { get; set; }
+ 
+ 	public bool InfiniteHealth { get; set; }
+diff --git a/Separate Mods from Cheats/Project_Development.md b/Separate Mods from Cheats/Project_Development.md
+index ac61723..27806e4 100644
+--- a/Separate Mods from Cheats/Project_Development.md	
++++ b/Separate Mods from Cheats/Project_Development.md	
+@@ -526,6 +526,66 @@ Finalize core design decisions: category-only GMCM, master progression toggle, h
+ 
+ ---
+ 
++## Entry 5: Implementation Phase 1 - ModConfig Extension
++**Date**: February 18, 2026
++**Phase**: Implementation
++
++### Work Completed
++Extended ModConfig.cs with 9 new properties for category-level control and progression restrictions.
++
++### Code Changes
++
++**File**: `CJBCheatsMenu.Framework.Models/ModConfig.cs`
++
++**Properties Added**:
++```csharp
++// 8 Category Master Toggles (all default to true)
++public bool EnablePlayerAndTools { get; set; } = true;
++public bool EnableFarmAndFishing { get; set; } = true;
++public bool EnableRelationships { get; set; } = true;
++public bool EnableSkills { get; set; } = true;
++public bool EnableTime { get; set; } = true;
++public bool EnableWarps { get; set; } = true;
++public bool EnableWeather { get; set; } = true;
++public bool EnableAdvanced { get; set; } = true;
++
++// Progression Restrictions (defaults to false - unrestricted)
++public bool EnforceWarpProgressionRestrictions { get; set; } = false;
++```
++
++**Organization**:
++- Properties added after general settings (keybinds, tabs, grow radius)
++- Before individual feature toggles (InfiniteHealth, etc.)
++- Clearly commented with section headers
++- XML documentation comments added for clarity
++
++### Technical Details
++
++**Default Values**:
++- All category toggles: `true` (backward compatible - everything enabled)
++- Progression restrictions: `false` (classic unrestricted behavior)
++
++**Backward Compatibility**:
++- Existing config.json files will load correctly
++- New properties use defaults if not present in file
++- No breaking changes to existing properties
++- Serialization/deserialization handled by existing infrastructure
++
++**No Build Errors**: Verified compilation successful
++
++### Next Steps
++1. ✅ Phase 1: ModConfig.cs extended
++2. ⏭️ Phase 2: Update CheatManager to respect category toggles
++3. ⬜ Phase 3: Expand GenericModConfigMenuIntegration.cs
++4. ⬜ Phase 4: Update individual cheat OnConfig methods
++5. ⬜ Phase 5: Implement warp progression restrictions
++6. ⬜ Phase 6: Test implementation
++
++### Commit Info
++Phase 1 complete: Add 9 new properties to ModConfig.cs for category toggles and progression restrictions.
++
++---
++
+ ## Template for Future Entries
+ 
+ <!--
+-- 
+2.51.2.windows.1
+

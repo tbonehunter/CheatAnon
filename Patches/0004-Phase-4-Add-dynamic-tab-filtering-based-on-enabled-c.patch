@@ -1,0 +1,201 @@
+From d24999a6a44b2b34a746d4eddde8d409a06d157b Mon Sep 17 00:00:00 2001
+From: Stan <stanbontrager@users.noreply.github.com>
+Date: Wed, 18 Feb 2026 16:05:50 -0500
+Subject: [PATCH 4/5] Phase 4: Add dynamic tab filtering based on enabled
+ categories
+
+- Modified CheatsMenu.ResetComponents() to build tab list conditionally
+- Each cheat category tab only appears if corresponding config property is enabled
+- Controls tab always shown (not a cheat category)
+- Provides clean UI with no clutter from disabled categories
+- Implements anti-temptation feature: disabled tabs completely hidden
+- Updated Project_Development.md with Entry 8
+---
+ CJBCheatsMenu.Framework/CheatsMenu.cs         |  38 ++++--
+ .../Project_Development.md                    | 121 ++++++++++++++++++
+ 2 files changed, 147 insertions(+), 12 deletions(-)
+
+diff --git a/CJBCheatsMenu.Framework/CheatsMenu.cs b/CJBCheatsMenu.Framework/CheatsMenu.cs
+index abf2521..0717a54 100644
+--- a/CJBCheatsMenu.Framework/CheatsMenu.cs
++++ b/CJBCheatsMenu.Framework/CheatsMenu.cs
+@@ -393,18 +393,32 @@ internal class CheatsMenu : IClickableMenu
+ 		int labelY = (int)((float)base.yPositionOnScreen + 64f * (IsAndroid ? 1.25f : 1.5f));
+ 		int labelHeight = 57;
+ 		Tabs.Clear();
+-		Tabs.AddRange((IEnumerable<ClickableComponent>)(object)new ClickableComponent[9]
+-		{
+-			new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.PlayerAndTools.ToString(), I18n.Tabs_PlayerAndTools()),
+-			new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.FarmAndFishing.ToString(), I18n.Tabs_FarmAndFishing()),
+-			new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Skills.ToString(), I18n.Tabs_Skills()),
+-			new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Weather.ToString(), I18n.Tabs_Weather()),
+-			new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Relationships.ToString(), I18n.Tabs_Relationships()),
+-			new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.WarpLocations.ToString(), I18n.Tabs_Warp()),
+-			new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Time.ToString(), I18n.Tabs_Time()),
+-			new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Advanced.ToString(), I18n.Tabs_Advanced()),
+-			new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Controls.ToString(), I18n.Tabs_Controls())
+-		});
++		
++		// Build tab list dynamically based on enabled categories
++		ModConfig config = Cheats.Context.Config;
++		List<ClickableComponent> tabList = new List<ClickableComponent>();
++		
++		if (config.EnablePlayerAndTools)
++			tabList.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.PlayerAndTools.ToString(), I18n.Tabs_PlayerAndTools()));
++		if (config.EnableFarmAndFishing)
++			tabList.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.FarmAndFishing.ToString(), I18n.Tabs_FarmAndFishing()));
++		if (config.EnableSkills)
++			tabList.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Skills.ToString(), I18n.Tabs_Skills()));
++		if (config.EnableWeather)
++			tabList.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Weather.ToString(), I18n.Tabs_Weather()));
++		if (config.EnableRelationships)
++			tabList.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Relationships.ToString(), I18n.Tabs_Relationships()));
++		if (config.EnableWarps)
++			tabList.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.WarpLocations.ToString(), I18n.Tabs_Warp()));
++		if (config.EnableTime)
++			tabList.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Time.ToString(), I18n.Tabs_Time()));
++		if (config.EnableAdvanced)
++			tabList.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Advanced.ToString(), I18n.Tabs_Advanced()));
++		
++		// Always add Controls tab (not a cheat category)
++		tabList.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, 320, 64), MenuTab.Controls.ToString(), I18n.Tabs_Controls()));
++		
++		Tabs.AddRange(tabList);
+ 		int scrollbarOffset = 64 * (IsAndroid ? 1 : 4) / 16;
+ 		UpArrow = new ClickableTextureComponent("up-arrow", new Rectangle(base.xPositionOnScreen + base.width + scrollbarOffset, base.yPositionOnScreen + 64, 44, 48), "", "", Game1.mouseCursors, new Rectangle(421, 459, 11, 12), 4f, false);
+ 		DownArrow = new ClickableTextureComponent("down-arrow", new Rectangle(base.xPositionOnScreen + base.width + scrollbarOffset, base.yPositionOnScreen + base.height - 64, 44, 48), "", "", Game1.mouseCursors, new Rectangle(421, 472, 11, 12), 4f, false);
+diff --git a/Separate Mods from Cheats/Project_Development.md b/Separate Mods from Cheats/Project_Development.md
+index da62eba..49801d3 100644
+--- a/Separate Mods from Cheats/Project_Development.md	
++++ b/Separate Mods from Cheats/Project_Development.md	
+@@ -821,6 +821,127 @@ Phase 3 complete: Expand GMCM integration with category toggles and progression
+ 
+ ---
+ 
++## Entry 8: Implementation Phase 4 - Menu UI Category Filtering
++**Date**: February 18, 2026
++**Phase**: Implementation
++
++### Work Completed
++Modified the in-game cheats menu to dynamically show/hide tabs based on enabled categories. Disabled categories no longer appear in the menu, providing a clean UI and preventing temptation.
++
++### Code Changes
++
++**File**: `CJBCheatsMenu.Framework/CheatsMenu.cs`
++
++**ResetComponents() Method Modified**:
++- **Before**: Fixed array of 9 tabs always displayed
++- **After**: Dynamic list of tabs built conditionally
++
++**Implementation**:
++```csharp
++// Build tab list dynamically based on enabled categories
++ModConfig config = Cheats.Context.Config;
++List<ClickableComponent> tabList = new List<ClickableComponent>();
++
++if (config.EnablePlayerAndTools)
++    tabList.Add(new ClickableComponent(..., MenuTab.PlayerAndTools, ...));
++if (config.EnableFarmAndFishing)
++    tabList.Add(new ClickableComponent(..., MenuTab.FarmAndFishing, ...));
++// ... (6 more conditional adds for other categories)
++
++// Always add Controls tab (not a cheat category)
++tabList.Add(new ClickableComponent(..., MenuTab.Controls, ...));
++
++Tabs.AddRange(tabList);
++```
++
++### Technical Details
++
++**Tab Visibility Logic**:
++- Each cheat category tab checks its corresponding config property
++- PlayerAndTools → `config.EnablePlayerAndTools`
++- FarmAndFishing → `config.EnableFarmAndFishing`
++- Skills → `config.EnableSkills`
++- Weather → `config.EnableWeather`
++- Relationships → `config.EnableRelationships`
++- WarpLocations → `config.EnableWarps`
++- Time → `config.EnableTime`
++- Advanced → `config.EnableAdvanced`
++- **Controls tab always shown** (not a cheat category, contains keybind settings)
++
++**Vertical Positioning**:
++- Counter variable `i` increments only when tab is added
++- Ensures no gaps in tab list when categories are disabled
++- Tabs remain properly spaced regardless of which are shown
++
++### User Experience Enhancement
++
++**Before**:
++```
++[Player & Tools]  (disabled, but still visible - clutter)
++[Farm & Fishing]
++[Skills]          (disabled, but still visible - temptation)
++[Weather]
++[Relationships]
++[Warps]
++[Time]
++[Advanced]
++[Controls]
++```
++
++**After** (with Player & Tools and Skills disabled):
++```
++[Farm & Fishing]
++[Weather]
++[Relationships]
++[Warps]
++[Time]
++[Advanced]
++[Controls]
++```
++
++**Benefits**:
++- **Cleaner UI**: No visual clutter from disabled categories
++- **Prevents Temptation**: Out of sight, out of mind (anti-temptation feature)
++- **Clear Feedback**: Missing tabs indicate disabled categories
++- **Natural Layout**: No gaps or gray-out needed
++
++### Integration with Title Screen Configuration
++
++**Workflow**:
++1. **At Title Screen**: Player opens GMCM, disables "Player & Tools" category
++2. **GMCM Behavior**: Mod closes game back to title (titleScreenOnly: true)
++3. **In Game**: Player presses P (or hotkey) to open cheats menu
++4. **Menu Display**: Player & Tools tab doesn't appear at all
++5. **Result**: Player can't access infinite health, stamina, etc. (disabled features)
++
++### Edge Case Handling
++
++**All Categories Disabled**: 
++- Controls tab still appears (always shown)
++- Menu still functional for hotkey configuration
++- No crash or empty menu state
++
++**Current Tab Becomes Invalid**:
++- Not an issue: config changes at title screen, menu reopened fresh
++- Menu constructor receives valid initialTab parameter
++- ResetComponents() called after config change respects new settings
++
++### No Build Errors
++All changes compile successfully.
++
++### Next Steps
++1. ✅ Phase 1: ModConfig.cs extended
++2. ✅ Phase 2: Category checks integrated into cheats
++3. ✅ Phase 3: GMCM integration & localization complete
++4. ✅ Phase 4: Menu UI category filtering complete
++5. ⏭️ Phase 5: Implement warp progression restrictions
++6. ⬜ Phase 6: Test implementation
++
++### Commit Info
++Phase 4 complete: Update CheatsMenu to dynamically show/hide tabs based on enabled categories. Disabled categories no longer appear in menu UI.
++
++---
++
+ ## Template for Future Entries
+ 
+ <!--
+-- 
+2.51.2.windows.1
+
