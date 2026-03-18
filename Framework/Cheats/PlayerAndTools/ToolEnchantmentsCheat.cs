@@ -43,7 +43,7 @@ internal class ToolEnchantmentsCheat : BaseCheat
     /// <inheritdoc />
     public override void OnConfig(CheatContext context, out bool needsInput, out bool needsUpdate, out bool needsRendering)
     {
-        if (!context.IsPlayerAndToolsEnabled())
+        if (!context.IsToolEnchantmentsEnabled())
         {
             needsInput = false;
             needsUpdate = false;
@@ -52,7 +52,7 @@ internal class ToolEnchantmentsCheat : BaseCheat
         }
 
         needsInput = false;
-        needsUpdate = context.Config.NoFriendshipDecay;
+        needsUpdate = false; // ToolEnchantments is UI-only; no per-tick update needed
         needsRendering = false;
     }
 

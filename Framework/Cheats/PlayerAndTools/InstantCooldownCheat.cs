@@ -25,7 +25,7 @@ internal class InstantCooldownCheat : BaseCheat
     /// <inheritdoc />
     public override void OnConfig(CheatContext context, out bool needsInput, out bool needsUpdate, out bool needsRendering)
     {
-        if (!context.IsPlayerAndToolsEnabled())
+        if (!context.IsPlayerStatsEnabled())
         {
             needsInput = false;
             needsUpdate = false;

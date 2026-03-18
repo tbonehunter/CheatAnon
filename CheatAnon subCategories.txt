@@ -1,0 +1,50 @@
+Player & Tools
+	Player
+	Tools
+	Tool Enchantments
+	Money	
+	Casino Coins
+	Golden Walnuts
+	Qi Gems
+
+Farm & Fishing
+	Farm
+	Fishing
+	Allow Fast Machine Processing
+
+Skills
+	Skills
+	Professions
+
+Weather
+	No subcategory, simple toggle on or off
+
+Relationships
+	Give Gifts Anytime
+	No Friendship Decay 
+	Adjust Friendship Levels
+
+Warp Locations
+	Main Locations
+	Town
+	Forest
+	Mountain	
+	Beach
+	Desert
+	Ginger Island
+(Note: Keep progression restrictions toggle as is currently used)
+
+Time
+	No subcategory, simple toggle on or off
+
+Advanced
+	Complete Quests
+	Wallet Items
+	Unlocked Areas
+	Unlocked Content
+	Community Center
+
+Controls
+	(same as current setup)
+
+

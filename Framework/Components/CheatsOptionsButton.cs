@@ -20,7 +20,7 @@ internal class CheatsOptionsButton<TButton> : BaseOptionsElement
     private readonly Rectangle SetButtonSprite = new(294, 428, 21, 11);
 
     /// <summary>The button area in screen pixels.</summary>
-    private Rectangle SetButtonBounds;
+    protected Rectangle SetButtonBounds;
 
 
     /*********

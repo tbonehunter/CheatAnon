@@ -260,6 +260,18 @@ internal class CheatsMenu : IClickableMenu
         this.UpArrow.tryHover(x, y);
         this.DownArrow.tryHover(x, y);
         this.Scrollbar.tryHover(x, y);
+
+        // show tooltip for any option that has one and is being hovered
+        for (int i = 0; i < this.OptionSlots.Count; i++)
+        {
+            int optionIndex = this.CurrentItemIndex + i;
+            if (optionIndex < this.Options.Count && this.OptionSlots[i].bounds.Contains(x, y))
+            {
+                if (this.Options[optionIndex] is BaseOptionsElement elem)
+                    this.HoverText = elem.GetHoverText(x - this.OptionSlots[i].bounds.X, y - this.OptionSlots[i].bounds.Y) ?? "";
+                break;
+            }
+        }
     }
 
     /// <inheritdoc />
@@ -348,37 +360,36 @@ internal class CheatsMenu : IClickableMenu
 
             this.Tabs.Clear();
             
-            // Add tabs only for enabled categories
-            CheatContext context = this.Cheats.Context;
+            // Add tabs only for enabled categories (respects both category and subcategory toggles)
             List<ClickableComponent> enabledTabs = new();
-            
-            if (context.IsPlayerAndToolsEnabled())
+
+            if (this.IsTabEnabled(MenuTab.PlayerAndTools))
                 enabledTabs.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, Game1.tileSize * 5, Game1.tileSize), MenuTab.PlayerAndTools.ToString(), I18n.Tabs_PlayerAndTools()));
-            
-            if (context.IsFarmAndFishingEnabled())
+
+            if (this.IsTabEnabled(MenuTab.FarmAndFishing))
                 enabledTabs.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, Game1.tileSize * 5, Game1.tileSize), MenuTab.FarmAndFishing.ToString(), I18n.Tabs_FarmAndFishing()));
-            
-            if (context.IsSkillsEnabled())
+
+            if (this.IsTabEnabled(MenuTab.Skills))
                 enabledTabs.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, Game1.tileSize * 5, Game1.tileSize), MenuTab.Skills.ToString(), I18n.Tabs_Skills()));
-            
-            if (context.IsWeatherEnabled())
+
+            if (this.IsTabEnabled(MenuTab.Weather))
                 enabledTabs.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, Game1.tileSize * 5, Game1.tileSize), MenuTab.Weather.ToString(), I18n.Tabs_Weather()));
-            
-            if (context.IsRelationshipsEnabled())
+
+            if (this.IsTabEnabled(MenuTab.Relationships))
                 enabledTabs.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, Game1.tileSize * 5, Game1.tileSize), MenuTab.Relationships.ToString(), I18n.Tabs_Relationships()));
-            
-            if (context.IsWarpsEnabled())
+
+            if (this.IsTabEnabled(MenuTab.WarpLocations))
                 enabledTabs.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, Game1.tileSize * 5, Game1.tileSize), MenuTab.WarpLocations.ToString(), I18n.Tabs_Warp()));
-            
-            if (context.IsTimeEnabled())
+
+            if (this.IsTabEnabled(MenuTab.Time))
                 enabledTabs.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, Game1.tileSize * 5, Game1.tileSize), MenuTab.Time.ToString(), I18n.Tabs_Time()));
-            
-            if (context.IsAdvancedEnabled())
+
+            if (this.IsTabEnabled(MenuTab.Advanced))
                 enabledTabs.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, Game1.tileSize * 5, Game1.tileSize), MenuTab.Advanced.ToString(), I18n.Tabs_Advanced()));
-            
+
             // Always show Controls tab (not a cheat category)
             enabledTabs.Add(new ClickableComponent(new Rectangle(labelX, labelY + labelHeight * i++, Game1.tileSize * 5, Game1.tileSize), MenuTab.Controls.ToString(), I18n.Tabs_Controls()));
-            
+
             this.Tabs.AddRange(enabledTabs);
         }
 
@@ -409,100 +420,112 @@ internal class CheatsMenu : IClickableMenu
         switch (this.CurrentTab)
         {
             case MenuTab.PlayerAndTools:
-                // player
-                this.AddOptions(
-                    $"{I18n.Player_Title()}:",
-                    cheats.InfiniteHealth,
-                    cheats.InfiniteStamina,
-                    cheats.InstantCooldowns,
-                    cheats.OneHitKill,
-                    cheats.MaxDailyLuck,
-                    cheats.MoveSpeed,
-                    cheats.InventorySize
-                );
+                // player stats
+                if (context.IsPlayerStatsEnabled())
+                    this.AddOptions(
+                        $"{I18n.Player_Title()}:",
+                        cheats.InfiniteHealth,
+                        cheats.InfiniteStamina,
+                        cheats.InstantCooldowns,
+                        cheats.OneHitKill,
+                        cheats.MaxDailyLuck,
+                        cheats.MoveSpeed,
+                        cheats.InventorySize
+                    );
 
                 // tools
-                this.AddOptions(
-                    $"{I18n.Tools_Title()}:",
-                    cheats.InfiniteWater,
-                    cheats.OneHitBreak,
-                    cheats.HarvestWithScythe
-                );
+                if (context.IsToolsEnabled())
+                    this.AddOptions(
+                        $"{I18n.Tools_Title()}:",
+                        cheats.InfiniteWater,
+                        cheats.OneHitBreak,
+                        cheats.HarvestWithScythe
+                    );
 
                 // enchantments
-                this.AddOptions(
-                    $"{I18n.ToolEnchantments_Title()}:",
-                    cheats.ToolEnchantments
-                );
+                if (context.IsToolEnchantmentsEnabled())
+                    this.AddOptions(
+                        $"{I18n.ToolEnchantments_Title()}:",
+                        cheats.ToolEnchantments
+                    );
 
                 // money
-                this.AddOptions(
-                    $"{I18n.Add_Money()}:",
-                    cheats.AddMoney
-                );
+                if (context.IsAddMoneyEnabled())
+                    this.AddOptions(
+                        $"{I18n.Add_Money()}:",
+                        cheats.AddMoney
+                    );
 
                 // casino coins
-                this.AddOptions(
-                    $"{I18n.Add_CasinoCoins()}:",
-                    cheats.AddCasinoCoins
-                );
+                if (context.IsAddCasinoCoinsEnabled())
+                    this.AddOptions(
+                        $"{I18n.Add_CasinoCoins()}:",
+                        cheats.AddCasinoCoins
+                    );
 
                 // golden walnuts
-                this.AddOptions(
-                    $"{I18n.Add_GoldenWalnuts()}:",
-                    cheats.AddGoldenWalnuts
-                );
+                if (context.IsAddGoldenWalnutsEnabled())
+                    this.AddOptions(
+                        $"{I18n.Add_GoldenWalnuts()}:",
+                        cheats.AddGoldenWalnuts
+                    );
 
                 // Qi gems
-                this.AddOptions(
-                    $"{I18n.Add_QiGems()}:",
-                    cheats.AddQiGems
-                );
+                if (context.IsAddQiGemsEnabled())
+                    this.AddOptions(
+                        $"{I18n.Add_QiGems()}:",
+                        cheats.AddQiGems
+                    );
                 break;
 
             case MenuTab.FarmAndFishing:
                 // farming
-                this.AddOptions(
-                    $"{I18n.Farm_Title()}:",
-                    cheats.AutoWaterCrops,
-                    cheats.AutoWaterPetBowls,
-                    cheats.DurableFences,
-                    cheats.InstantBuild,
-                    cheats.AutoFeedAnimals,
-                    cheats.AutoPetAnimals,
-                    cheats.AutoPetPets,
-                    cheats.InfiniteHay
-                );
+                if (context.IsFarmEnabled())
+                    this.AddOptions(
+                        $"{I18n.Farm_Title()}:",
+                        cheats.AutoWaterCrops,
+                        cheats.AutoWaterPetBowls,
+                        cheats.DurableFences,
+                        cheats.InstantBuild,
+                        cheats.AutoFeedAnimals,
+                        cheats.AutoPetAnimals,
+                        cheats.AutoPetPets,
+                        cheats.InfiniteHay
+                    );
 
                 // fishing
-                this.AddOptions(
-                    $"{I18n.Fishing_Title()}:",
-                    cheats.InstantFishCatch,
-                    cheats.InstantFishBite,
-                    cheats.AlwaysCastMaxDistance,
-                    cheats.AlwaysFishTreasure,
-                    cheats.DurableFishTackles
-                );
+                if (context.IsFishingEnabled())
+                    this.AddOptions(
+                        $"{I18n.Fishing_Title()}:",
+                        cheats.InstantFishCatch,
+                        cheats.InstantFishBite,
+                        cheats.AlwaysCastMaxDistance,
+                        cheats.AlwaysFishTreasure,
+                        cheats.DurableFishTackles
+                    );
 
                 // fast machines
-                this.AddOptions(
-                    $"{I18n.FastMachines_Title()}:",
-                    cheats.FastMachines
-                );
+                if (context.IsFastMachinesEnabled())
+                    this.AddOptions(
+                        $"{I18n.FastMachines_Title()}:",
+                        cheats.FastMachines
+                    );
                 break;
 
             case MenuTab.Skills:
                 // skills
-                this.AddOptions(
-                    $"{I18n.Skills_Title()}:",
-                    cheats.Skills
-                );
+                if (context.IsSkillLevelsEnabled())
+                    this.AddOptions(
+                        $"{I18n.Skills_Title()}:",
+                        cheats.Skills
+                    );
 
                 // professions
-                this.AddOptions(
-                    $"{I18n.Professions_Title()}:",
-                    cheats.Professions
-                );
+                if (context.IsProfessionsEnabled())
+                    this.AddOptions(
+                        $"{I18n.Professions_Title()}:",
+                        cheats.Professions
+                    );
                 break;
 
             case MenuTab.Weather:
@@ -511,18 +534,20 @@ internal class CheatsMenu : IClickableMenu
                 break;
 
             case MenuTab.Relationships:
-                // relationship options
-                this.AddOptions(
-                    $"{I18n.Relationships_Title()}:",
-                    cheats.AlwaysGiveGifts,
-                    cheats.NoFriendshipDecay
-                );
+                // relationship toggles — show section header if at least one is enabled
+                {
+                    bool hasToggles = context.IsGiveGiftsAnytimeEnabled() || context.IsNoFriendshipDecayEnabled();
+                    if (hasToggles) this.AddTitle($"{I18n.Relationships_Title()}:");
+                    if (context.IsGiveGiftsAnytimeEnabled()) this.AddOptions(cheats.AlwaysGiveGifts);
+                    if (context.IsNoFriendshipDecayEnabled()) this.AddOptions(cheats.NoFriendshipDecay);
+                }
 
                 // heart levels
-                this.AddOptions(
-                    $"{I18n.Relationships_Friends()}:",
-                    cheats.Hearts
-                );
+                if (context.IsAdjustFriendshipLevelsEnabled())
+                    this.AddOptions(
+                        $"{I18n.Relationships_Friends()}:",
+                        cheats.Hearts
+                    );
                 break;
 
             case MenuTab.WarpLocations:
@@ -554,34 +579,24 @@ internal class CheatsMenu : IClickableMenu
                     this.AddDescription(I18n.Flags_Warning());
 
                     // quests
-                    this.AddOptions(
-                        $"{I18n.Flags_Quests()}:",
-                        cheats.Quests
-                    );
+                    if (context.IsCompleteQuestsEnabled())
+                        this.AddOptions($"{I18n.Flags_Quests()}:", cheats.Quests);
 
                     // wallet items
-                    this.AddOptions(
-                        $"{I18n.Flags_Wallet()}:",
-                        cheats.WalletItems
-                    );
+                    if (context.IsWalletItemsEnabled())
+                        this.AddOptions($"{I18n.Flags_Wallet()}:", cheats.WalletItems);
 
                     // locked doors
-                    this.AddOptions(
-                        $"{I18n.Flags_Unlocked()}:",
-                        cheats.UnlockDoor
-                    );
+                    if (context.IsUnlockedAreasEnabled())
+                        this.AddOptions($"{I18n.Flags_Unlocked()}:", cheats.UnlockDoor);
 
                     // locked content
-                    this.AddOptions(
-                        $"{I18n.Flags_UnlockedContent()}:",
-                        cheats.UnlockContent
-                    );
+                    if (context.IsUnlockedContentEnabled())
+                        this.AddOptions($"{I18n.Flags_UnlockedContent()}:", cheats.UnlockContent);
 
                     // community center
-                    this.AddOptions(
-                        $"{I18n.Flags_CommunityCenter()}:",
-                        cheats.Bundles
-                    );
+                    if (context.IsCommunityCenterEnabled())
+                        this.AddOptions($"{I18n.Flags_CommunityCenter()}:", cheats.Bundles);
                 }
                 break;
 
@@ -640,7 +655,11 @@ internal class CheatsMenu : IClickableMenu
     /// <summary>Whether any button bind control is active and listening for input.</summary>
     private bool IsPressNewKeyActive()
     {
-        return this.Options.Any(p => p is CheatsOptionsKeyListener { IsListening: true });
+        return this.Options.Any(p =>
+            (p is CheatsOptionsKeyListener { IsListening: true }) ||
+            (p is WarpOptionsButton { IsListening: true }) ||
+            (p is CheatsOptionsNumberWheel { IsListening: true })
+        );
     }
 
     /// <summary>Get the currently active option, if any.</summary>
@@ -780,41 +799,47 @@ internal class CheatsMenu : IClickableMenu
         return tabID;
     }
 
-    /// <summary>Check if a tab's category is enabled.</summary>
+    /// <summary>Check if a tab's category is enabled and has at least one visible subcategory.</summary>
     /// <param name="tab">The tab to check.</param>
     private bool IsTabEnabled(MenuTab tab)
     {
         CheatContext context = this.Cheats.Context;
         return tab switch
         {
-            MenuTab.PlayerAndTools => context.IsPlayerAndToolsEnabled(),
-            MenuTab.FarmAndFishing => context.IsFarmAndFishingEnabled(),
-            MenuTab.Skills => context.IsSkillsEnabled(),
-            MenuTab.Weather => context.IsWeatherEnabled(),
-            MenuTab.Relationships => context.IsRelationshipsEnabled(),
-            MenuTab.WarpLocations => context.IsWarpsEnabled(),
-            MenuTab.Time => context.IsTimeEnabled(),
-            MenuTab.Advanced => context.IsAdvancedEnabled(),
-            MenuTab.Controls => true, // Controls tab is always enabled
-            _ => true
+            // A tab is only shown when its master category toggle is on AND at least one subcategory is enabled.
+            // Weather and Time have no subcategories, so only the category toggle is checked.
+            MenuTab.PlayerAndTools => context.IsPlayerAndToolsEnabled() && context.HasAnyPlayerAndToolsSubEnabled(),
+            MenuTab.FarmAndFishing => context.IsFarmAndFishingEnabled() && context.HasAnyFarmAndFishingSubEnabled(),
+            MenuTab.Skills         => context.IsSkillsEnabled()         && context.HasAnySkillsSubEnabled(),
+            MenuTab.Weather        => context.IsWeatherEnabled(),
+            MenuTab.Relationships  => context.IsRelationshipsEnabled()  && context.HasAnyRelationshipsSubEnabled(),
+            MenuTab.WarpLocations  => context.IsWarpsEnabled()          && context.HasAnyWarpsSubEnabled(),
+            MenuTab.Time           => context.IsTimeEnabled(),
+            MenuTab.Advanced       => context.IsAdvancedEnabled()       && context.HasAnyAdvancedSubEnabled(),
+            MenuTab.Controls       => true, // Controls tab is always visible
+            _                      => true
         };
     }
 
-    /// <summary>Get the first enabled tab.</summary>
+    /// <summary>Get the first enabled tab (considering both category and subcategory toggles).</summary>
     private MenuTab GetFirstEnabledTab()
     {
-        CheatContext context = this.Cheats.Context;
-        
-        if (context.IsPlayerAndToolsEnabled()) return MenuTab.PlayerAndTools;
-        if (context.IsFarmAndFishingEnabled()) return MenuTab.FarmAndFishing;
-        if (context.IsSkillsEnabled()) return MenuTab.Skills;
-        if (context.IsWeatherEnabled()) return MenuTab.Weather;
-        if (context.IsRelationshipsEnabled()) return MenuTab.Relationships;
-        if (context.IsWarpsEnabled()) return MenuTab.WarpLocations;
-        if (context.IsTimeEnabled()) return MenuTab.Time;
-        if (context.IsAdvancedEnabled()) return MenuTab.Advanced;
-        
-        // If all categories are disabled, default to Controls
+        // Reuse IsTabEnabled so empty tabs (all subcategories off) are also skipped.
+        foreach (MenuTab candidate in new[]
+        {
+            MenuTab.PlayerAndTools,
+            MenuTab.FarmAndFishing,
+            MenuTab.Skills,
+            MenuTab.Weather,
+            MenuTab.Relationships,
+            MenuTab.WarpLocations,
+            MenuTab.Time,
+            MenuTab.Advanced
+        })
+        {
+            if (this.IsTabEnabled(candidate)) return candidate;
+        }
+
         return MenuTab.Controls;
     }
 }

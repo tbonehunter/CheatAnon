@@ -46,7 +46,7 @@ internal class HarvestWithScytheCheat : BaseCheat
     /// <inheritdoc />
     public override void OnConfig(CheatContext context, out bool needsInput, out bool needsUpdate, out bool needsRendering)
     {
-        if (!context.IsPlayerAndToolsEnabled())
+        if (!context.IsToolsEnabled())
         {
             needsInput = false;
             needsUpdate = false;

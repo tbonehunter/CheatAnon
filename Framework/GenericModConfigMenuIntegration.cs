@@ -88,78 +88,82 @@ internal class GenericModConfigMenuIntegration
             setValue: value => this.Config.ReloadConfigKey = value
         );
 
-        // category toggles (title screen only)
-        menu.AddSectionTitle(this.Manifest, () => "Enable/Disable Cheat Categories");
-        menu.AddParagraph(this.Manifest, () => "Toggle entire cheat categories on/off. Changes only take effect from the title screen.");
-        
-        menu.AddBoolOption(
-            mod: this.Manifest,
-            name: () => "Enable Player & Tools",
-            tooltip: () => "Enable or disable all Player & Tools cheats (health, stamina, speed, etc.)",
-            getValue: () => this.Config.EnablePlayerAndTools,
-            setValue: value => this.Config.EnablePlayerAndTools = value
-        );
-        menu.AddBoolOption(
-            mod: this.Manifest,
-            name: () => "Enable Farm & Fishing",
-            tooltip: () => "Enable or disable all Farm & Fishing cheats (auto-water, instant fish, fast machines, etc.)",
-            getValue: () => this.Config.EnableFarmAndFishing,
-            setValue: value => this.Config.EnableFarmAndFishing = value
-        );
-        menu.AddBoolOption(
-            mod: this.Manifest,
-            name: () => "Enable Relationships",
-            tooltip: () => "Enable or disable all Relationships cheats (hearts, friendship decay, gifts, etc.)",
-            getValue: () => this.Config.EnableRelationships,
-            setValue: value => this.Config.EnableRelationships = value
-        );
-        menu.AddBoolOption(
-            mod: this.Manifest,
-            name: () => "Enable Skills",
-            tooltip: () => "Enable or disable all Skills cheats (skill levels, professions, etc.)",
-            getValue: () => this.Config.EnableSkills,
-            setValue: value => this.Config.EnableSkills = value
-        );
-        menu.AddBoolOption(
-            mod: this.Manifest,
-            name: () => "Enable Time",
-            tooltip: () => "Enable or disable all Time cheats (freeze time, set time/day/season/year, etc.)",
-            getValue: () => this.Config.EnableTime,
-            setValue: value => this.Config.EnableTime = value
-        );
-        menu.AddBoolOption(
-            mod: this.Manifest,
-            name: () => "Enable Warps",
-            tooltip: () => "Enable or disable all Warp cheats (teleport to locations)",
-            getValue: () => this.Config.EnableWarps,
-            setValue: value => this.Config.EnableWarps = value
-        );
-        menu.AddBoolOption(
-            mod: this.Manifest,
-            name: () => "Enable Weather",
-            tooltip: () => "Enable or disable all Weather cheats (set weather for tomorrow)",
-            getValue: () => this.Config.EnableWeather,
-            setValue: value => this.Config.EnableWeather = value
-        );
-        menu.AddBoolOption(
-            mod: this.Manifest,
-            name: () => "Enable Advanced",
-            tooltip: () => "Enable or disable all Advanced cheats (quests, bundles, unlocks, wallet items, etc.)",
-            getValue: () => this.Config.EnableAdvanced,
-            setValue: value => this.Config.EnableAdvanced = value
-        );
+        // ── Category toggles ──────────────────────────────────────────────────
+        // Each category has a master ON/OFF toggle.
+        // Categories that have named sections also list those section toggles directly below.
+        // Turning off a section hides it from the in-game menu without disabling its category.
+        menu.AddParagraph(this.Manifest, () => "All changes take effect at the title screen. Turning a section OFF hides it from the in-game cheats menu.");
 
-        // progression restrictions
-        menu.AddSectionTitle(this.Manifest, () => "Progression Restrictions");
-        menu.AddBoolOption(
-            mod: this.Manifest,
-            name: () => "Enforce Warp Restrictions",
-            tooltip: () => "When enabled, warp locations require meeting in-game progression requirements (e.g., boat repair for Ginger Island, desert access for Desert, etc.)",
-            getValue: () => this.Config.EnforceWarpProgressionRestrictions,
-            setValue: value => this.Config.EnforceWarpProgressionRestrictions = value
-        );
+        // ── Player & Tools ────────────────────────────────────────────────────
+        menu.AddSectionTitle(this.Manifest, () => "Player & Tools");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnablePlayerAndTools, v => this.Config.EnablePlayerAndTools = v,
+            () => "Enable Player & Tools", () => "Master toggle — turns off the entire Player & Tools tab.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnablePlayerStats,        v => this.Config.EnablePlayerStats        = v, () => "  Player Stats",        () => "Health, stamina, speed, luck, one-hit kill, inventory size, cooldowns.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableTools,              v => this.Config.EnableTools              = v, () => "  Tools",              () => "One-hit break, infinite water, harvest with scythe.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableToolEnchantments,   v => this.Config.EnableToolEnchantments   = v, () => "  Tool Enchantments", () => "Apply enchantments to tools.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddMoney,           v => this.Config.EnableAddMoney           = v, () => "  Add Money",          () => "Add gold to your wallet.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddCasinoCoins,     v => this.Config.EnableAddCasinoCoins     = v, () => "  Add Casino Coins",   () => "Add Qi coins.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddGoldenWalnuts,   v => this.Config.EnableAddGoldenWalnuts   = v, () => "  Add Golden Walnuts", () => "Add Golden Walnuts.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddQiGems,          v => this.Config.EnableAddQiGems          = v, () => "  Add Qi Gems",        () => "Add Qi Gems.");
 
-        // other options
+        // ── Farm & Fishing ────────────────────────────────────────────────────
+        menu.AddSectionTitle(this.Manifest, () => "Farm & Fishing");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableFarmAndFishing, v => this.Config.EnableFarmAndFishing = v,
+            () => "Enable Farm & Fishing", () => "Master toggle — turns off the entire Farm & Fishing tab.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableFarm,           v => this.Config.EnableFarm           = v, () => "  Farm",                    () => "Auto-water, fences, instant build, animals, hay.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableFishing,        v => this.Config.EnableFishing        = v, () => "  Fishing",                  () => "Instant catch/bite, distance, tackle, treasure.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableFastMachines,   v => this.Config.EnableFastMachines   = v, () => "  Fast Machine Processing",   () => "All machines finish instantly.");
+
+        // ── Skills ────────────────────────────────────────────────────────────
+        menu.AddSectionTitle(this.Manifest, () => "Skills");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableSkills, v => this.Config.EnableSkills = v,
+            () => "Enable Skills", () => "Master toggle — turns off the entire Skills tab.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableSkillLevels,  v => this.Config.EnableSkillLevels  = v, () => "  Skill Levels",  () => "Raise individual skill levels.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableProfessions,  v => this.Config.EnableProfessions  = v, () => "  Professions",   () => "Change profession choices.");
+
+        // ── Relationships ─────────────────────────────────────────────────────
+        menu.AddSectionTitle(this.Manifest, () => "Relationships");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableRelationships, v => this.Config.EnableRelationships = v,
+            () => "Enable Relationships", () => "Master toggle — turns off the entire Relationships tab.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableGiveGiftsAnytime,       v => this.Config.EnableGiveGiftsAnytime       = v, () => "  Give Gifts Anytime",        () => "Remove the weekly gift limit.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableNoFriendshipDecay,      v => this.Config.EnableNoFriendshipDecay      = v, () => "  No Friendship Decay",       () => "Friendship points don't drop over time.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAdjustFriendshipLevels, v => this.Config.EnableAdjustFriendshipLevels = v, () => "  Adjust Friendship Levels",  () => "Per-NPC heart level sliders.");
+
+        // ── Time ──────────────────────────────────────────────────────────────
+        menu.AddSectionTitle(this.Manifest, () => "Time");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableTime, v => this.Config.EnableTime = v,
+            () => "Enable Time", () => "Freeze time, set time of day, day, season, and year.");
+
+        // ── Warps ─────────────────────────────────────────────────────────────
+        menu.AddSectionTitle(this.Manifest, () => "Warps");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarps, v => this.Config.EnableWarps = v,
+            () => "Enable Warps", () => "Master toggle — turns off the entire Warps tab.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnforceWarpProgressionRestrictions, v => this.Config.EnforceWarpProgressionRestrictions = v,
+            () => "  Enforce Progression Restrictions", () => "Warp sections only appear after you've unlocked them in-game (e.g., boat repair for Ginger Island). Default: OFF.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionMain,     v => this.Config.EnableWarpSectionMain     = v, () => "  Main Locations",  () => "Farm, Mines, and other main-area warps.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionTown,     v => this.Config.EnableWarpSectionTown     = v, () => "  Town",            () => "Town-area warps.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionForest,   v => this.Config.EnableWarpSectionForest   = v, () => "  Forest",          () => "Forest-area warps.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionMountain, v => this.Config.EnableWarpSectionMountain = v, () => "  Mountain",        () => "Mountain-area warps.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionBeach,    v => this.Config.EnableWarpSectionBeach    = v, () => "  Beach",           () => "Beach-area warps.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionDesert,   v => this.Config.EnableWarpSectionDesert   = v, () => "  Desert",          () => "Desert warps.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionIsland,   v => this.Config.EnableWarpSectionIsland   = v, () => "  Ginger Island",   () => "Ginger Island warps.");
+
+        // ── Weather ───────────────────────────────────────────────────────────
+        menu.AddSectionTitle(this.Manifest, () => "Weather");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWeather, v => this.Config.EnableWeather = v,
+            () => "Enable Weather", () => "Set the weather for tomorrow.");
+
+        // ── Advanced ──────────────────────────────────────────────────────────
+        menu.AddSectionTitle(this.Manifest, () => "Advanced");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAdvanced, v => this.Config.EnableAdvanced = v,
+            () => "Enable Advanced", () => "Master toggle — turns off the entire Advanced tab.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableCompleteQuests,   v => this.Config.EnableCompleteQuests   = v, () => "  Complete Quests",   () => "Instantly complete or cancel quests/special orders.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWalletItems,      v => this.Config.EnableWalletItems      = v, () => "  Wallet Items",      () => "Add special items to your wallet.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableUnlockedAreas,    v => this.Config.EnableUnlockedAreas    = v, () => "  Unlocked Areas",    () => "Unlock doors and NPC areas.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableUnlockedContent,  v => this.Config.EnableUnlockedContent  = v, () => "  Unlocked Content",  () => "Unlock tailoring, Junimo text, perfection tracker.");
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableCommunityCenter,  v => this.Config.EnableCommunityCenter  = v, () => "  Community Center",  () => "Complete or reset Community Center bundles / Joja purchases.");
+
+        // ── Other options ──────────────────────────────────────────────────────
         menu.AddSectionTitle(this.Manifest, I18n.Config_Title_OtherOptions);
         menu.AddTextOption(
             mod: this.Manifest,
@@ -216,14 +220,55 @@ internal class GenericModConfigMenuIntegration
         // category toggles
         config.EnablePlayerAndTools = defaults.EnablePlayerAndTools;
         config.EnableFarmAndFishing = defaults.EnableFarmAndFishing;
-        config.EnableRelationships = defaults.EnableRelationships;
-        config.EnableSkills = defaults.EnableSkills;
-        config.EnableTime = defaults.EnableTime;
-        config.EnableWarps = defaults.EnableWarps;
-        config.EnableWeather = defaults.EnableWeather;
-        config.EnableAdvanced = defaults.EnableAdvanced;
+        config.EnableRelationships  = defaults.EnableRelationships;
+        config.EnableSkills         = defaults.EnableSkills;
+        config.EnableTime           = defaults.EnableTime;
+        config.EnableWarps          = defaults.EnableWarps;
+        config.EnableWeather        = defaults.EnableWeather;
+        config.EnableAdvanced       = defaults.EnableAdvanced;
 
         // progression restrictions
         config.EnforceWarpProgressionRestrictions = defaults.EnforceWarpProgressionRestrictions;
+
+        // subcategory toggles - Player & Tools
+        config.EnablePlayerStats       = defaults.EnablePlayerStats;
+        config.EnableTools             = defaults.EnableTools;
+        config.EnableToolEnchantments  = defaults.EnableToolEnchantments;
+        config.EnableAddMoney          = defaults.EnableAddMoney;
+        config.EnableAddCasinoCoins    = defaults.EnableAddCasinoCoins;
+        config.EnableAddGoldenWalnuts  = defaults.EnableAddGoldenWalnuts;
+        config.EnableAddQiGems         = defaults.EnableAddQiGems;
+
+        // subcategory toggles - Farm & Fishing
+        config.EnableFarm         = defaults.EnableFarm;
+        config.EnableFishing      = defaults.EnableFishing;
+        config.EnableFastMachines = defaults.EnableFastMachines;
+
+        // subcategory toggles - Skills
+        config.EnableSkillLevels = defaults.EnableSkillLevels;
+        config.EnableProfessions = defaults.EnableProfessions;
+
+        // subcategory toggles - Relationships
+        config.EnableGiveGiftsAnytime       = defaults.EnableGiveGiftsAnytime;
+        config.EnableNoFriendshipDecay      = defaults.EnableNoFriendshipDecay;
+        config.EnableAdjustFriendshipLevels = defaults.EnableAdjustFriendshipLevels;
+
+        // subcategory toggles - Warps
+        config.EnableWarpSectionMain     = defaults.EnableWarpSectionMain;
+        config.EnableWarpSectionTown     = defaults.EnableWarpSectionTown;
+        config.EnableWarpSectionForest   = defaults.EnableWarpSectionForest;
+        config.EnableWarpSectionMountain = defaults.EnableWarpSectionMountain;
+        config.EnableWarpSectionBeach    = defaults.EnableWarpSectionBeach;
+        config.EnableWarpSectionDesert   = defaults.EnableWarpSectionDesert;
+        config.EnableWarpSectionIsland   = defaults.EnableWarpSectionIsland;
+
+        // subcategory toggles - Advanced
+        config.EnableCompleteQuests  = defaults.EnableCompleteQuests;
+        config.EnableWalletItems     = defaults.EnableWalletItems;
+        config.EnableUnlockedAreas   = defaults.EnableUnlockedAreas;
+        config.EnableUnlockedContent = defaults.EnableUnlockedContent;
+        config.EnableCommunityCenter = defaults.EnableCommunityCenter;
+
+        // warp hotkeys are intentionally NOT reset (player-defined key bindings)
     }
 }

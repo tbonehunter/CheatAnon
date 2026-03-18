@@ -49,6 +49,10 @@ internal class WarpCheat : BaseCheat
 
         foreach ((string sectionKey, List<WarpContentModel> sectionWarps) in warps)
         {
+            // skip sections disabled via GMCM subcategory toggle
+            if (!context.IsWarpSectionEnabled(sectionKey))
+                continue;
+
             // section title
             yield return new OptionsElement($"{sectionNames.GetValueOrDefault(sectionKey, sectionKey)}:");
 
@@ -74,17 +78,30 @@ internal class WarpCheat : BaseCheat
                 switch (warp.Location)
                 {
                     case "Farm" when warp.Tile == Vector2.Zero:
-                        yield return new CheatsOptionsButton(warp.DisplayName, context.SlotWidth, this.WarpToFarm);
+                    {
+                        // Farm warp uses a fixed key so hotkeys survive i18n changes
+                        const string warpId = "Farm:0,0";
+                        yield return new WarpOptionsButton(warp.DisplayName, context.SlotWidth, warpId, context.Config, this.WarpToFarm);
                         break;
+                    }
 
                     case "Mine":
                     case "SkullCave":
-                        yield return this.CreateMinesButton(warp, context.SlotWidth, enforceRestrictions);
+                        // Mine level selector with Go and Set Hotkey buttons
+                        yield return this.CreateMinesButton(warp, context, enforceRestrictions);
+                        yield return new DescriptionElement("  Click: \u00b11  |  Shift: \u00b110  |  Ctrl: \u00b150  |  Shift+Ctrl: \u00b1500", splitLinesIfNeeded: false);
                         break;
 
                     default:
-                        yield return new CheatsOptionsButton(warp.DisplayName, context.SlotWidth, toggle: () => this.Warp(warp.Location, (int)warp.Tile.X, (int)warp.Tile.Y));
+                    {
+                        // Capture locals for the lambda and hotkey key
+                        string loc = warp.Location;
+                        int tx = (int)warp.Tile.X;
+                        int ty = (int)warp.Tile.Y;
+                        string warpId = $"{loc}:{tx},{ty}";
+                        yield return new WarpOptionsButton(warp.DisplayName, context.SlotWidth, warpId, context.Config, () => this.Warp(loc, tx, ty));
                         break;
+                    }
                 }
             }
         }
@@ -168,13 +185,15 @@ internal class WarpCheat : BaseCheat
 
     /// <summary>Create a warp option with a mine level selector.</summary>
     /// <param name="warp">The warp data.</param>
-    /// <param name="slotWidth">The width of the component to create.</param>
+    /// <param name="context">The cheat context.</param>
     /// <param name="enforceRestrictions">Whether to enforce progression restrictions.</param>
-    private CheatsOptionsNumberWheel CreateMinesButton(WarpContentModel warp, int slotWidth, bool enforceRestrictions)
+    private CheatsOptionsNumberWheel CreateMinesButton(WarpContentModel warp, CheatContext context, bool enforceRestrictions)
     {
         const int bottomOfMine = MineShaft.bottomOfMineLevel;
         bool isSkullCavern = warp.Location == "SkullCave";
         bool inQuarryMine = (Game1.currentLocation as MineShaft)?.getMineArea() == MineShaft.quarryMineShaft;
+        int slotWidth = context.SlotWidth;
+        string warpId = $"{warp.Location}:{(int)warp.Tile.X},{(int)warp.Tile.Y}";
 
         // Get deepest mine level reached by player
         int deepestLevel = isSkullCavern ? Game1.player.deepestMineLevel - bottomOfMine : Game1.player.deepestMineLevel;
@@ -220,7 +239,9 @@ internal class WarpCheat : BaseCheat
             initialValue: inQuarryMine ? 0 : Game1.CurrentMineLevel,
             minValue: isSkullCavern ? bottomOfMine : 0,
             maxValue: isSkullCavern ? 999_999 : bottomOfMine, // the game behaves weirdly with high numbers and we have limited space, so set a semi-reasonable limit
-            formatValue: formatValue
+            formatValue: formatValue,
+            warpId: warpId,
+            config: context.Config
         );
     }
 }

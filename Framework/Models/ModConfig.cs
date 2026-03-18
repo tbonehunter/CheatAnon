@@ -79,6 +79,111 @@ internal class ModConfig
     public bool EnforceWarpProgressionRestrictions { get; set; } = false;
 
     /****
+    ** Subcategory toggles - Player & Tools
+    ****/
+    /// <summary>Whether to show the Player stats section (health, stamina, speed, luck, etc.).</summary>
+    public bool EnablePlayerStats { get; set; } = true;
+
+    /// <summary>Whether to show the Tools section (one-hit break, infinite water, harvest with scythe).</summary>
+    public bool EnableTools { get; set; } = true;
+
+    /// <summary>Whether to show the Tool Enchantments section.</summary>
+    public bool EnableToolEnchantments { get; set; } = true;
+
+    /// <summary>Whether to show the Add Money section.</summary>
+    public bool EnableAddMoney { get; set; } = true;
+
+    /// <summary>Whether to show the Add Casino Coins section.</summary>
+    public bool EnableAddCasinoCoins { get; set; } = true;
+
+    /// <summary>Whether to show the Add Golden Walnuts section.</summary>
+    public bool EnableAddGoldenWalnuts { get; set; } = true;
+
+    /// <summary>Whether to show the Add Qi Gems section.</summary>
+    public bool EnableAddQiGems { get; set; } = true;
+
+    /****
+    ** Subcategory toggles - Farm & Fishing
+    ****/
+    /// <summary>Whether to show the Farm section (auto-water, fences, building, animals, hay).</summary>
+    public bool EnableFarm { get; set; } = true;
+
+    /// <summary>Whether to show the Fishing section (instant catch, bite, distance, tackle, treasure).</summary>
+    public bool EnableFishing { get; set; } = true;
+
+    /// <summary>Whether to show the Fast Machine Processing section.</summary>
+    public bool EnableFastMachines { get; set; } = true;
+
+    /****
+    ** Subcategory toggles - Skills
+    ****/
+    /// <summary>Whether to show the Skill Levels section.</summary>
+    public bool EnableSkillLevels { get; set; } = true;
+
+    /// <summary>Whether to show the Professions section.</summary>
+    public bool EnableProfessions { get; set; } = true;
+
+    /****
+    ** Subcategory toggles - Relationships
+    ****/
+    /// <summary>Whether to show the Give Gifts Anytime option.</summary>
+    public bool EnableGiveGiftsAnytime { get; set; } = true;
+
+    /// <summary>Whether to show the No Friendship Decay option.</summary>
+    public bool EnableNoFriendshipDecay { get; set; } = true;
+
+    /// <summary>Whether to show the Adjust Friendship Levels section.</summary>
+    public bool EnableAdjustFriendshipLevels { get; set; } = true;
+
+    /****
+    ** Subcategory toggles - Warp sections
+    ****/
+    /// <summary>Whether to show the Main warp section.</summary>
+    public bool EnableWarpSectionMain { get; set; } = true;
+
+    /// <summary>Whether to show the Town warp section.</summary>
+    public bool EnableWarpSectionTown { get; set; } = true;
+
+    /// <summary>Whether to show the Forest warp section.</summary>
+    public bool EnableWarpSectionForest { get; set; } = true;
+
+    /// <summary>Whether to show the Mountain warp section.</summary>
+    public bool EnableWarpSectionMountain { get; set; } = true;
+
+    /// <summary>Whether to show the Beach warp section.</summary>
+    public bool EnableWarpSectionBeach { get; set; } = true;
+
+    /// <summary>Whether to show the Desert warp section.</summary>
+    public bool EnableWarpSectionDesert { get; set; } = true;
+
+    /// <summary>Whether to show the Ginger Island warp section.</summary>
+    public bool EnableWarpSectionIsland { get; set; } = true;
+
+    /****
+    ** Subcategory toggles - Advanced
+    ****/
+    /// <summary>Whether to show the Complete Quests section.</summary>
+    public bool EnableCompleteQuests { get; set; } = true;
+
+    /// <summary>Whether to show the Wallet Items section.</summary>
+    public bool EnableWalletItems { get; set; } = true;
+
+    /// <summary>Whether to show the Unlocked Areas section.</summary>
+    public bool EnableUnlockedAreas { get; set; } = true;
+
+    /// <summary>Whether to show the Unlocked Content section.</summary>
+    public bool EnableUnlockedContent { get; set; } = true;
+
+    /// <summary>Whether to show the Community Center section.</summary>
+    public bool EnableCommunityCenter { get; set; } = true;
+
+    /****
+    ** Warp hotkeys
+    ****/
+    /// <summary>Per-warp hotkeys keyed by warp ID (format: "Location:X,Y"). Pressing a bound key warps the player to that location directly.</summary>
+    public Dictionary<string, SButton> WarpHotkeys { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+
+    /****
     ** Player cheats
     ****/
     /// <summary>The player speed buff to add.</summary>

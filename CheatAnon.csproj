@@ -29,6 +29,10 @@
     <None Remove="*.md" />
     <None Remove="*.code-workspace" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove=".gitignore" />
+    <None Remove="CheatAnon subCategories.txt" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Pathoschild.Stardew.ModBuildConfig" Version="4.1.1" />

@@ -8,6 +8,21 @@ namespace CJBCheatsMenu.Framework.Components;
 internal abstract class BaseOptionsElement : OptionsElement
 {
     /*********
+    ** Accessors
+    *********/
+    /// <summary>An optional tooltip shown when the cursor hovers over this element.</summary>
+    public string? Tooltip { get; set; }
+
+    /// <summary>Get the tooltip text to show when the cursor is at the given slot-relative position, or <c>null</c> for no tooltip.</summary>
+    /// <param name="slotX">The X position of the cursor relative to the option slot origin.</param>
+    /// <param name="slotY">The Y position of the cursor relative to the option slot origin.</param>
+    public virtual string? GetHoverText(int slotX, int slotY)
+    {
+        return this.Tooltip;
+    }
+
+
+    /*********
     ** Protected methods
     *********/
     /// <summary>Construct an instance.</summary>

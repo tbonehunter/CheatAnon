@@ -26,7 +26,7 @@ internal class InstantFishCatchCheat : BaseCheat
     /// <inheritdoc />
     public override void OnConfig(CheatContext context, out bool needsInput, out bool needsUpdate, out bool needsRendering)
     {
-        if (!context.IsFarmAndFishingEnabled())
+        if (!context.IsFishingEnabled())
         {
             needsInput = false;
             needsUpdate = false;

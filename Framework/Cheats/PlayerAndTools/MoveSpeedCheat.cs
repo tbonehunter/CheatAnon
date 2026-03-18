@@ -45,10 +45,11 @@ internal class MoveSpeedCheat : BaseCheat
     public override void OnConfig(CheatContext context, out bool needsInput, out bool needsUpdate, out bool needsRendering)
     {
         needsInput = false;
-        needsUpdate = context.Config.MoveSpeed > 0;
+        // Only tick the speed buff when both the category and subcategory are enabled
+        needsUpdate = context.IsPlayerStatsEnabled() && context.Config.MoveSpeed > 0;
         needsRendering = false;
 
-        Game1.player.buffs.Remove(MoveSpeedCheat.BuffId); // remove buff if disabled, or reset on next tick if still enabled
+        Game1.player.buffs.Remove(MoveSpeedCheat.BuffId); // always clear; re-applied on next tick if still active
     }
 
     /// <inheritdoc />

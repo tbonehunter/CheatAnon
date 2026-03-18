@@ -35,7 +35,7 @@ internal class NoFriendshipDecayCheat : BaseCheat
     /// <inheritdoc />
     public override void OnConfig(CheatContext context, out bool needsInput, out bool needsUpdate, out bool needsRendering)
     {
-        if (!context.IsRelationshipsEnabled())
+        if (!context.IsNoFriendshipDecayEnabled())
         {
             needsInput = false;
             needsUpdate = false;

@@ -3,11 +3,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using CJB.Common;
 using CJBCheatsMenu.Framework;
+using CJBCheatsMenu.Framework.Cheats.Warps;
+using CJBCheatsMenu.Framework.Components;
 using CJBCheatsMenu.Framework.Models;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
 using StardewValley;
+using StardewValley.Buildings;
 
 namespace CJBCheatsMenu;
 
@@ -47,6 +50,9 @@ internal class ModEntry : Mod
 
         // init translations
         I18n.Init(helper.Translation);
+
+        // load custom button textures
+        WarpOptionsButton.Initialize(helper);
 
         // init warp content loader
         this.WarpContentLoader = new WarpContentLoader(this.ModManifest.UniqueID, () => this.Config, this.LoadModData(), this.Monitor, this.Helper.ModRegistry);
@@ -145,6 +151,10 @@ internal class ModEntry : Mod
             }
         }
 
+        // try warp hotkeys when player is completely free (no menu open)
+        if (Context.IsPlayerFree && Game1.currentMinigame == null && Game1.activeClickableMenu == null)
+            this.TryWarpHotkey(e);
+
         // handle button if applicable
         if (Game1.keyboardDispatcher?.Subscriber is null)
             this.Cheats.Value.OnButtonsChanged(e);
@@ -193,6 +203,79 @@ internal class ModEntry : Mod
         {
             this.Helper.WriteConfig(this.Config);
             this.Cheats.Value.OnOptionsChanged();
+        }
+    }
+
+    /// <summary>Check if any pressed button matches a warp hotkey and execute the warp.</summary>
+    /// <param name="e">The button event data.</param>
+    private void TryWarpHotkey(ButtonsChangedEventArgs e)
+    {
+        ModConfig config = this.Config;
+
+        foreach (SButton button in e.Pressed)
+        {
+            // find a warp hotkey matching this button
+            string? warpId = null;
+            foreach ((string key, SButton bound) in config.WarpHotkeys)
+            {
+                if (bound == button) { warpId = key; break; }
+            }
+            if (warpId == null) continue;
+
+            // parse "Location:X,Y" key format
+            int colon = warpId.IndexOf(':');
+            if (colon < 0) continue;
+            string location = warpId[..colon];
+            string[] coords = warpId[(colon + 1)..].Split(',');
+            if (coords.Length != 2) continue;
+            if (!int.TryParse(coords[0].Trim(), out int tileX) || !int.TryParse(coords[1].Trim(), out int tileY)) continue;
+
+            // enforce progression restrictions if set
+            if (!WarpRestrictions.CanAccessLocation(location, config.EnforceWarpProgressionRestrictions))
+            {
+                this.Monitor.Log($"Hotkey warp to '{location}' blocked by progression restrictions.", LogLevel.Debug);
+                continue;
+            }
+
+            // reset swimming state then warp
+            Game1.player.swimming.Value = false;
+            Game1.player.changeOutOfSwimSuit();
+
+            if (location == "Farm" && tileX == 0 && tileY == 0)
+            {
+                // mirror WarpCheat.WarpToFarm(): drop farmhands in front of their cabin
+                string cabinName = Game1.player.homeLocation.Value;
+                if (!Context.IsMainPlayer && cabinName != null)
+                {
+                    bool warped = false;
+                    foreach (GameLocation loc in Game1.locations)
+                    {
+                        foreach (Building building in loc.buildings)
+                        {
+                            if (building.indoors.Value?.uniqueName.Value == cabinName)
+                            {
+                                int cx = building.tileX.Value + building.humanDoor.X;
+                                int cy = building.tileY.Value + building.humanDoor.Y + 1;
+                                Game1.warpFarmer(loc.Name, cx, cy, false);
+                                warped = true;
+                                break;
+                            }
+                        }
+                        if (warped) break;
+                    }
+                    if (warped) return;
+                }
+
+                // main player (or cabin not found) — go to farmhouse entrance
+                var farmhousePos = Game1.getFarm().GetMainFarmHouseEntry();
+                Game1.warpFarmer("Farm", farmhousePos.X, farmhousePos.Y, false);
+            }
+            else
+            {
+                Game1.warpFarmer(location, tileX, tileY, false);
+            }
+
+            return; // execute at most one hotkey warp per tick
         }
     }
 

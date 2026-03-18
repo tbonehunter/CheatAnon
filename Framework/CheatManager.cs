@@ -170,7 +170,7 @@ internal class CheatManager
     ** Warps
     ****/
     /// <summary>Warps the player to selected locations.</summary>
-    public ICheat Warps { get; }
+    public WarpCheat Warps { get; }
 
     /****
     ** Time

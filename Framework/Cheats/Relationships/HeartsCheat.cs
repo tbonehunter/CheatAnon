@@ -42,7 +42,7 @@ internal class HeartsCheat : BaseCheat
     /// <inheritdoc />
     public override void OnConfig(CheatContext context, out bool needsInput, out bool needsUpdate, out bool needsRendering)
     {
-        if (!context.IsRelationshipsEnabled())
+        if (!context.IsAdjustFriendshipLevelsEnabled())
         {
             needsInput = false;
             needsUpdate = false;
@@ -51,7 +51,7 @@ internal class HeartsCheat : BaseCheat
         }
 
         needsInput = false;
-        needsUpdate = context.Config.NoFriendshipDecay;
+        needsUpdate = false; // HeartsCheat is UI-only; no per-tick update needed
         needsRendering = false;
     }
 
