@@ -17,6 +17,12 @@ internal static class WarpRestrictions
             || Game1.player.mailReceived.Contains("JojaMember"); // or Joja member (bypasses all bundle restrictions)
     }
 
+    /// <summary>Check if the player has unlocked Skull Cavern (desert access + Skull Key).</summary>
+    public static bool CanAccessSkullCavern()
+    {
+        return CanAccessDesert() && Game1.player.hasSkullKey;
+    }
+
     /// <summary>Check if the player has unlocked Ginger Island (boat repair).</summary>
     public static bool CanAccessGingerIsland()
     {
@@ -55,13 +61,46 @@ internal static class WarpRestrictions
     /// <summary>Check if the player has unlocked Railroad/Bathhouse/Witch's Swamp (rubble cleared on Summer 3 Year 1).</summary>
     public static bool CanAccessRailroadArea()
     {
-        // Check if it's Summer 3 Year 1 or later
-        if (Game1.year < 1)
-            return false;
-        if (Game1.year == 1 && (Game1.currentSeason != "summer" || Game1.dayOfMonth < 3))
-            return false;
-        
-        return true;
+        // Rubble is cleared the night of Summer 2, Year 1; accessible from Summer 3 onward
+        if (Game1.year > 1)
+            return true;
+        if (Game1.year == 1)
+        {
+            // Summer day 3 or later means access
+            if (Game1.currentSeason == "summer" && Game1.dayOfMonth >= 3)
+                return true;
+            // Any season after summer in Year 1 means access (fall, winter)
+            if (Game1.currentSeason == "fall" || Game1.currentSeason == "winter")
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>Check if the player has unlocked Mines/Adventurer's Guild (landslide cleared Spring 5 Year 1).</summary>
+    public static bool CanAccessMines()
+    {
+        // Landslide is cleared on Spring 5, Year 1
+        if (Game1.year > 1)
+            return true;
+        if (Game1.year == 1)
+        {
+            // Spring is the first season; day 5 or later means access
+            if (Game1.currentSeason == "spring" && Game1.dayOfMonth >= 5)
+                return true;
+            // Any season after spring in Year 1 means access
+            if (Game1.currentSeason != "spring")
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>Check if the player has unlocked Tide Pools (beach bridge repaired).</summary>
+    public static bool CanAccessTidePools()
+    {
+        // Beach bridge is a property on the Beach location object
+        if (Game1.getLocationFromName("Beach") is Beach beach)
+            return beach.bridgeFixed.Value;
+        return false;
     }
 
     /// <summary>Check if the player has unlocked Quarry (Crafts Room bundles or Joja).</summary>
@@ -97,8 +136,14 @@ internal static class WarpRestrictions
         // Check location-specific restrictions
         return locationName switch
         {
+            // Mines (landslide cleared Spring 5 Year 1)
+            "Mine" => CanAccessMines(),
+            
             // Desert locations
-            "Desert" or "SkullCave" or "SandyHouse" => CanAccessDesert(),
+            "Desert" or "SandyHouse" or "Club" => CanAccessDesert(),
+            
+            // Skull Cavern (requires desert access + Skull Key from reaching mine level 120)
+            "SkullCave" => CanAccessSkullCavern(),
             
             // Ginger Island locations (including volcano dungeon levels)
             "IslandSouth" or "IslandWest" or "IslandNorth" or "IslandEast" or
@@ -146,5 +191,35 @@ internal static class WarpRestrictions
     {
         // Quarry warp is at Mountain (127, 12) according to warps.json
         return locationName == "Mountain" && tileX == 127 && tileY == 12;
+    }
+
+    /// <summary>Check if a warp to Forest at specific coordinates is the Wizard Tower warp.</summary>
+    /// <param name="locationName">The location name.</param>
+    /// <param name="tileX">The tile X coordinate.</param>
+    /// <param name="tileY">The tile Y coordinate.</param>
+    public static bool IsWizardTowerWarp(string locationName, int tileX, int tileY)
+    {
+        // Wizard Tower warp is at Forest (5, 27) according to warps.json
+        return locationName == "Forest" && tileX == 5 && tileY == 27;
+    }
+
+    /// <summary>Check if a warp to Mountain at specific coordinates is the Adventurer's Guild warp.</summary>
+    /// <param name="locationName">The location name.</param>
+    /// <param name="tileX">The tile X coordinate.</param>
+    /// <param name="tileY">The tile Y coordinate.</param>
+    public static bool IsAdventurersGuildWarp(string locationName, int tileX, int tileY)
+    {
+        // Adventurer's Guild warp is at Mountain (76, 9) according to warps.json
+        return locationName == "Mountain" && tileX == 76 && tileY == 9;
+    }
+
+    /// <summary>Check if a warp to Beach at specific coordinates is the Tide Pools warp.</summary>
+    /// <param name="locationName">The location name.</param>
+    /// <param name="tileX">The tile X coordinate.</param>
+    /// <param name="tileY">The tile Y coordinate.</param>
+    public static bool IsTidePoolsWarp(string locationName, int tileX, int tileY)
+    {
+        // Tide Pools warp is at Beach (87, 26) according to warps.json
+        return locationName == "Beach" && tileX == 87 && tileY == 26;
     }
 }

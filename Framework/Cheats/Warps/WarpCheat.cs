@@ -74,6 +74,20 @@ internal class WarpCheat : BaseCheat
                         continue;
                 }
 
+                // special check for Adventurer's Guild warp (it's on Mountain map, blocked by same landslide as Mines)
+                if (enforceRestrictions && WarpRestrictions.IsAdventurersGuildWarp(warp.Location, (int)warp.Tile.X, (int)warp.Tile.Y))
+                {
+                    if (!WarpRestrictions.CanAccessMines())
+                        continue;
+                }
+
+                // special check for Tide Pools warp (it's on Beach map, requires bridge repair)
+                if (enforceRestrictions && WarpRestrictions.IsTidePoolsWarp(warp.Location, (int)warp.Tile.X, (int)warp.Tile.Y))
+                {
+                    if (!WarpRestrictions.CanAccessTidePools())
+                        continue;
+                }
+
                 // get warp button
                 switch (warp.Location)
                 {
