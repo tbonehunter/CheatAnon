@@ -1,10 +1,10 @@
-# CheatAnon
+# Cheaters Anonymous
 
 **CJB Cheats Menu with a built-in sponsor for accountability**
 
-CheatAnon is a modified version of [CJB Cheats Menu](https://www.nexusmods.com/stardewvalley/mods/4) by CJBok and Pathoschild. Nearly all cheat functionality is theirs. This mod adds one thing: **granular control over which cheats are accessible in-game**, plus warp hotkeys and a dedicated Go button for warp locations.
+Cheaters Anonymous is a modified version of [CJB Cheats Menu](https://www.nexusmods.com/stardewvalley/mods/4) by CJBok and Pathoschild. Nearly all cheat functionality is theirs. This mod adds one thing: **granular control over which cheats are accessible in-game**, plus warp hotkeys and a dedicated Go button for warp locations.
 
-If you want the full, unmodified cheats experience, use the original CJB Cheats Menu. CheatAnon is for players who want to keep some cheats available while locking others away from themselves.
+If you want the full, unmodified cheats experience, use the original CJB Cheats Menu. Cheaters Anonymous is for players who want to keep some cheats available while locking others away from themselves.
 
 ---
 
@@ -19,7 +19,7 @@ If you want the full, unmodified cheats experience, use the original CJB Cheats 
 ## Installation
 
 1. Install SMAPI and Generic Mod Config Menu if you haven't already.
-2. Download CheatAnon and unzip it into your `Stardew Valley/Mods` folder.
+2. Download Cheaters Anonymous and unzip it into your `Stardew Valley/Mods` folder.
 3. Launch the game through SMAPI.
 
 ---
