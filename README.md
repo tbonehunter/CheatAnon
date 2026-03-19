@@ -1,99 +1,94 @@
-# CJBCheatsMenu - Feature Configuration Enhancement
+# CheatAnon
 
-## Overview
-This project enhances the CJBCheatsMenu mod for Stardew Valley by adding a GMCM (Generic Mod Configuration Menu) interface that allows players to selectively enable/disable specific cheats and set intelligent restrictions.
+**CJB Cheats Menu with a built-in sponsor for accountability**
 
-## Purpose
-The original CJBCheatsMenu is a comprehensive mod with many features. By adding configurable toggles, we provide:
-- **Self-Control**: Players can disable cheats they want to avoid (looking at you, Stan!)
-- **Customization**: Enable only the cheats you actually want to use
-- **Smart Restrictions**: Progression-based limitations (e.g., no Ginger Island warp until boat is repaired)
-- **Maintainability**: Single mod, easier to update and maintain
+CheatAnon is a modified version of [CJB Cheats Menu](https://www.nexusmods.com/stardewvalley/mods/4) by CJBok and Pathoschild. Nearly all cheat functionality is theirs. This mod adds one thing: **granular control over which cheats are accessible in-game**, plus warp hotkeys and a dedicated Go button for warp locations.
 
-## Project Status
-✅ **IMPLEMENTATION COMPLETE** - February 19, 2026
+If you want the full, unmodified cheats experience, use the original CJB Cheats Menu. CheatAnon is for players who want to keep some cheats available while locking others away from themselves.
 
-All 5 phases implemented and committed:
-- **Phase 1**: Extended ModConfig.cs with 9 new properties
-- **Phase 2**: Added category checks to 28 cheat files + CheatContext helpers
-- **Phase 3**: GMCM integration with category toggles and progression restrictions
-- **Phase 4**: Dynamic tab filtering based on enabled categories
-- **Phase 5**: Warp progression restrictions with 10 location checks
-
-**Commits**:
-- e058f56: Phases 1-3 (ModConfig + category checks + GMCM)
-- 852abab: Phase 4 (dynamic tab filtering)
-- 2e71466: Phase 5 (warp progression restrictions)
-
-**Ready for testing in Stardew Valley with SMAPI.**
-
-## Features Implemented
-
-### Category Master Toggles (GMCM - Title Screen Only)
-- Enable/Disable Player & Tools cheats
-- Enable/Disable Farm & Fishing cheats
-- Enable/Disable Relationships cheats
-- Enable/Disable Skills cheats
-- Enable/Disable Time cheats
-- Enable/Disable Warps cheats
-- Enable/Disable Weather cheats
-- Enable/Disable Advanced cheats
-
-All category toggles default to **enabled** for backward compatibility.
-
-### Progression Restrictions (GMCM - Can Toggle Anytime)
-- **Enforce Warp Progression Restrictions**: Master toggle (default OFF)
-  - When enabled, warps require meeting in-game progression requirements
-  - Desert: Vault bundles or Joja membership
-  - Ginger Island: Boat repair complete
-  - Secret Woods: Steel Axe or better
-  - Sewer: Rusty Key obtained
-  - Mutant Bug Lair: Dark Talisman quest + Rusty Key
-  - Wizard Tower: Entered Community Center
-  - Railroad/Bathhouse/Witch's Swamp: Summer 3 Year 1+
-  - Quarry: Crafts Room bundles or Joja membership
-  - Mastery Cave: Reached Mastery level
-
-### In-Game Menu Behavior
-- Disabled category tabs are **hidden** (not grayed out)
-- Individual feature toggles remain in the in-game menu (Press P)
-- Controls tab always visible
-- Tab navigation automatically adjusts to visible tabs
-
-## Structure
-This workspace contains:
-- `/Analysis` - Documentation of existing features and dependencies
-- `/CJBCheatsMenu` - Modified source code with GMCM integration
-- `/Documentation` - Feature toggles and restrictions documentation
-- `/Implementation` - GMCM integration code and configuration system
-- `STATUS.md` - Detailed implementation progress tracker
-- `GMCM-Menu-Structure.md` - Complete GMCM design specification
-
-## Testing Checklist
-1. **Build & Deploy**: Compile in Visual Studio, copy to Mods folder
-2. **GMCM Integration**: Open GMCM from title screen, verify 8 category toggles + 1 progression restriction appear
-3. **Category Toggles**: Disable a category, restart game, verify that tab is hidden in-game menu
-4. **Progression Restrictions**: Enable warp restrictions, verify locked warps don't appear
-5. **Backward Compatibility**: Existing config.json loads with all categories enabled by default
+---
 
 ## Requirements
-- Visual Studio 2022 or VS Code with C# extensions
-- SMAPI (Stardew Modding API)
-- Generic Mod Configuration Menu (GMCM) mod
-- Stardew Valley 1.6+
 
-## Technical Approach
-- Integrated GMCM API for configuration UI (titleScreenOnly for category toggles)
-- Added toggle flags for each cheat category (8 categories)
-- Implemented progression checks for 10 warp locations
-- Maintained backward compatibility with existing config.json (all defaults enabled)
-- Added user-friendly English descriptions (i18n support deferred)
-- Dynamic UI filtering hides disabled category tabs
+- [SMAPI](https://smapi.io) 4.1.10 or later
+- [Generic Mod Config Menu](https://www.nexusmods.com/stardewvalley/mods/5098) (required)
+- Stardew Valley 1.6 or later
 
-## Implementation Details
-- **34 files modified** across Framework, Cheats, and Models
-- **1 new file created**: WarpRestrictions.cs (10 progression check methods)
-- **28 cheat files updated** with category enable checks
-- **Zero compilation errors** - ready for deployment
-## Contributing
-This is a modular separation project. Each mod will maintain the original functionality while being completely standalone.
+---
+
+## Installation
+
+1. Install SMAPI and Generic Mod Config Menu if you haven't already.
+2. Download CheatAnon and unzip it into your `Stardew Valley/Mods` folder.
+3. Launch the game through SMAPI.
+
+---
+
+## Configuration
+
+All configuration is done through **Generic Mod Config Menu**, accessible from the title screen.
+
+> Category toggles only take effect after returning to the title screen. All other settings apply immediately.
+
+### Category Toggles
+
+Each of the eight cheat categories can be independently enabled or disabled. When a category is disabled its tab is completely hidden from the in-game cheats menu — it won't appear until you re-enable it and return to the title screen.
+
+| Category | What it covers |
+|---|---|
+| Advanced | Bundle/quest completion, wallet items, area unlocks |
+| Farm & Fishing | Auto-feed/pet/water, fast machines, durable fences/tackles |
+| Player & Tools | Infinite health/stamina, move speed, one-hit kill/break, enchantments |
+| Relationships | Gift limits, friendship hearts, friendship decay |
+| Skills | Skill levels, professions |
+| Time | Freeze time, set time/day/season/year |
+| Warps | Warp to locations with Go button and hotkey binding |
+| Weather | Set tomorrow's weather |
+
+All categories are **enabled by default**, so the mod works identically to the original CJB Cheats Menu out of the box.
+
+### Subcategory Toggles
+
+Within each category, individual subcategories can also be toggled. For example, within Player & Tools you can enable Player Stats while disabling the Add Money buttons.
+
+### Warp Progression Restrictions
+
+An optional master toggle — **Enforce Warp Progression Restrictions** — limits which warp destinations are available based on your in-game progress. When enabled:
+
+| Destination | Requirement |
+|---|---|
+| Desert | Vault bundles complete or Joja membership |
+| Ginger Island (all locations) | Willy's boat repaired |
+| Secret Woods | Steel Axe or better |
+| Sewer | Rusty Key in wallet |
+| Mutant Bug Lair | Rusty Key + Dark Talisman quest complete |
+| Wizard Tower | Community Center entered |
+| Railroad / Bathhouse / Witch's Swamp | Summer 3, Year 1 or later |
+| Quarry | Crafts Room bundles or Joja membership |
+| Mastery Cave | Mastery level reached |
+
+This setting is **off by default** and can be changed at any time.
+
+---
+
+## Warp Tab
+
+The Warps tab has been enhanced beyond the original CJB Cheats Menu:
+
+- **Go button** — warps you to that location immediately (replaces the original single Set button)
+- **Set button** — binds a keyboard/gamepad key to warp to that location without opening the menu at all. The bound key is shown in brackets next to the location name. Press Escape or an invalid key to clear the binding.
+- **Mine / Skull Cavern** — includes a level selector (click −/+ to change level). Modifier keys adjust the step size: Shift ×10, Ctrl ×50, Shift+Ctrl ×500. The Go button warps to the selected level; the Set button binds a hotkey to the mine/cavern entrance.
+- Hovering over a Go or Set button shows a tooltip explaining what it does.
+
+---
+
+## Opening the Menu
+
+Press **P** in-game (default) to open the cheats menu. The key can be changed in GMCM.
+
+---
+
+## Credits
+
+- **CJBok and Pathoschild** — original [CJB Cheats Menu](https://www.nexusmods.com/stardewvalley/mods/4), which provides all cheat functionality in this mod
+- **tbonehunter** — category toggles, subcategory toggles, warp hotkeys, Go button, progression restrictions
