@@ -87,6 +87,10 @@ Press **P** in-game (default) to open the cheats menu. The key can be changed in
 
 ---
 
+## License and Source Code
+
+ - Source code for this mod is located at https://github.com/tbonehunter/CheatAnon. The software is published under the MIT license, just as the CJB Cheats Menu software from which it is derived. The license can be viewed in the source code.
+
 ## Credits
 
 - **CJBok and Pathoschild** — original [CJB Cheats Menu](https://www.nexusmods.com/stardewvalley/mods/4), which provides all cheat functionality in this mod
