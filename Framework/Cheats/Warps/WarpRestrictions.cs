@@ -29,6 +29,22 @@ internal static class WarpRestrictions
         return Game1.player.hasOrWillReceiveMail("willyBoatFixed");
     }
 
+    /// <summary>Check if the player has unlocked Island North (boat repair + Leo's hut parrot paid).</summary>
+    public static bool CanAccessIslandNorth()
+    {
+        // North turtle removed after paying the parrot in Leo's hut (1 Golden Walnut)
+        return CanAccessGingerIsland()
+            && Game1.player.hasOrWillReceiveMail("Island_FirstParrot");
+    }
+
+    /// <summary>Check if the player has unlocked Island West / Island Farm (boat repair + west turtle woken).</summary>
+    public static bool CanAccessIslandWest()
+    {
+        // West turtle woken after paying the beach parrot (10 Golden Walnuts)
+        return CanAccessGingerIsland()
+            && Game1.player.hasOrWillReceiveMail("Island_Turtle");
+    }
+
     /// <summary>Check if the player has unlocked Secret Woods (Steel Axe or better).</summary>
     public static bool CanAccessSecretWoods()
     {
@@ -45,11 +61,21 @@ internal static class WarpRestrictions
         return Game1.player.hasRustyKey;
     }
 
-    /// <summary>Check if the player has unlocked Mutant Bug Lair (Dark Talisman quest + Rusty Key).</summary>
+    /// <summary>Check if the player has unlocked Mutant Bug Lair (has Rusty Key + has retrieved Dark Talisman).</summary>
     public static bool CanAccessMutantBugLair()
     {
+        // Requires sewer access (Rusty Key) AND having already retrieved the Dark Talisman
+        // from the chest in the Bug Lair on foot, so the warp is only for return visits
         return Game1.player.hasRustyKey
-            && Game1.player.mailReceived.Contains("talkedToGunther");
+            && Game1.player.hasDarkTalisman;
+    }
+
+    /// <summary>Check if the player has unlocked Witch's Swamp (railroad access + magic ink quest complete).</summary>
+    public static bool CanAccessWitchSwamp()
+    {
+        // Requires both: railroad area accessible (Summer 3 Year 1+)
+        // AND magic ink quest completed for the Wizard
+        return CanAccessRailroadArea() && Game1.player.hasMagicInk;
     }
 
     /// <summary>Check if the player has unlocked Wizard Tower (entered Community Center).</summary>
@@ -145,15 +171,22 @@ internal static class WarpRestrictions
             // Skull Cavern (requires desert access + Skull Key from reaching mine level 120)
             "SkullCave" => CanAccessSkullCavern(),
             
-            // Ginger Island locations (including volcano dungeon levels)
-            "IslandSouth" or "IslandWest" or "IslandNorth" or "IslandEast" or
-            "IslandFarmHouse" or "IslandFarmCave" or "IslandFieldOffice" or
-            "IslandHut" or "IslandShrinePepper" or "IslandShrineRubies" or
-            "IslandShrineDiamonds" or "IslandShrine" or "Caldera" or
-            "LeoTreeHouse" or "QiNutRoom" or "IslandSecret" or
+            // Ginger Island - East (accessible immediately after boat repair)
+            "IslandEast" or "IslandHut" or "LeoTreeHouse" or
+            "IslandSouth" or "IslandSouthEast" or "IslandShrine" or
+            "IslandShrinePepper" or "IslandShrineRubies" or
+            "IslandShrineDiamonds" or "IslandSecret" => CanAccessGingerIsland(),
+            
+            // Ginger Island - North (requires Leo's hut parrot paid to remove north turtle)
+            "IslandNorth" or "IslandFieldOffice" or "Caldera" or
             "VolcanoDungeon0" or "VolcanoDungeon1" or "VolcanoDungeon2" or 
             "VolcanoDungeon3" or "VolcanoDungeon4" or "VolcanoDungeon5" or
-            "VolcanoDungeon6" or "VolcanoDungeon7" or "VolcanoDungeon8" or "VolcanoDungeon9" => CanAccessGingerIsland(),
+            "VolcanoDungeon6" or "VolcanoDungeon7" or "VolcanoDungeon8" or
+            "VolcanoDungeon9" => CanAccessIslandNorth(),
+            
+            // Ginger Island - West / Farm (requires 10 Golden Walnuts to wake west turtle)
+            "IslandWest" or "IslandFarmHouse" or "IslandFarmCave" or
+            "QiNutRoom" => CanAccessIslandWest(),
             
             // Secret Woods
             "Woods" => CanAccessSecretWoods(),
@@ -167,10 +200,12 @@ internal static class WarpRestrictions
             // Wizard Tower
             "WizardHouse" or "WizardHouseBasement" => CanAccessWizardTower(),
             
-            // Railroad area (includes Bathhouse and Witch's Swamp)
+            // Railroad area (includes Bathhouse)
             "Railroad" or "BathHouse_Entry" or "BathHouse_MensLocker" or
-            "BathHouse_WomensLocker" or "BathHouse_Pool" or
-            "WitchSwamp" or "WitchHut" or "WitchWarpCave" => CanAccessRailroadArea(),
+            "BathHouse_WomensLocker" or "BathHouse_Pool" => CanAccessRailroadArea(),
+            
+            // Witch's Swamp (requires railroad access + magic ink quest complete)
+            "WitchSwamp" or "WitchHut" or "WitchWarpCave" => CanAccessWitchSwamp(),
             
             // Quarry (removed - now handled in WarpCheat by checking tile coordinates)
             // "Mountain" when IsQuarryWarp(locationName) => CanAccessQuarry(),
