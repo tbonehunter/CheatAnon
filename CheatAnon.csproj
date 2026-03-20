@@ -32,6 +32,8 @@
   <ItemGroup>
     <None Remove=".gitignore" />
     <None Remove="CheatAnon subCategories.txt" />
+    <None Remove="CheatAnon.zip" />
+    <None Remove="WarpRestrictions.cs — two changes.txt" />
   </ItemGroup>
 
   <ItemGroup>
