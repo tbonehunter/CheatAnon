@@ -8,6 +8,7 @@
     <Version>1.40.0</Version>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
     <TranslationClassBuilder_AddGetByKey>true</TranslationClassBuilder_AddGetByKey>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <!-- Exclude dev-only files and folders from all build item tracking.
