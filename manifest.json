@@ -1,10 +1,10 @@
 ﻿{
     "Name": "Cheaters Anonymous",
     "Author": "CJBok and Pathoschild code modified by tbonehunter",
-    "Version": "1.40.0",
+    "Version": "1.0.0",
     "Description": "CJB Cheats Menu with a built-in sponsor for accountability",
     "UniqueID": "tbonehunter.CheatAnon",
     "EntryDll": "CheatAnon.dll",
     "MinimumApiVersion": "4.1.10",
-    "UpdateKeys": []
+    "UpdateKeys": ["Nexus: 43914"]
 }
