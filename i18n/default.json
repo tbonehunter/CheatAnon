@@ -240,5 +240,99 @@
     "config.title.other-options": "Other options",
     "config.default-tab.name": "Default tab",
     "config.default-tab.desc": "The tab shown by default when you open the menu.",
-    "config.other-options": "To configure cheats, press the 'open menu' key shown above in-game. Make sure you press it after loading the save, when no other menu or dialogue is open."
+    "config.other-options": "To configure cheats, press the 'open menu' key shown above in-game. Make sure you press it after loading the save, when no other menu or dialogue is open.",
+
+
+    /*********
+    ** Generic Mod Config Menu — Category Toggles
+    *********/
+    "config.category-toggles.note": "All changes take effect at the title screen. Turning a section OFF hides it from the in-game cheats menu.",
+
+    // Player & Tools
+    "config.enable-player-and-tools.name": "Enable Player & Tools",
+    "config.enable-player-and-tools.desc": "Master toggle — turns off the entire Player & Tools tab.",
+    "config.enable-player-stats.name": "  Player Stats",
+    "config.enable-player-stats.desc": "Health, stamina, speed, luck, one-hit kill, inventory size, cooldowns.",
+    "config.enable-tools.name": "  Tools",
+    "config.enable-tools.desc": "One-hit break, infinite water, harvest with scythe.",
+    "config.enable-tool-enchantments.name": "  Tool Enchantments",
+    "config.enable-tool-enchantments.desc": "Apply enchantments to tools.",
+    "config.enable-add-money.name": "  Add Money",
+    "config.enable-add-money.desc": "Add gold to your wallet.",
+    "config.enable-add-casino-coins.name": "  Add Casino Coins",
+    "config.enable-add-casino-coins.desc": "Add Qi coins.",
+    "config.enable-add-golden-walnuts.name": "  Add Golden Walnuts",
+    "config.enable-add-golden-walnuts.desc": "Add Golden Walnuts.",
+    "config.enable-add-qi-gems.name": "  Add Qi Gems",
+    "config.enable-add-qi-gems.desc": "Add Qi Gems.",
+
+    // Farm & Fishing
+    "config.enable-farm-and-fishing.name": "Enable Farm & Fishing",
+    "config.enable-farm-and-fishing.desc": "Master toggle — turns off the entire Farm & Fishing tab.",
+    "config.enable-farm.name": "  Farm",
+    "config.enable-farm.desc": "Auto-water, fences, instant build, animals, hay.",
+    "config.enable-fishing.name": "  Fishing",
+    "config.enable-fishing.desc": "Instant catch/bite, distance, tackle, treasure.",
+    "config.enable-fast-machines.name": "  Fast Machine Processing",
+    "config.enable-fast-machines.desc": "All machines finish instantly.",
+
+    // Skills
+    "config.enable-skills.name": "Enable Skills",
+    "config.enable-skills.desc": "Master toggle — turns off the entire Skills tab.",
+    "config.enable-skill-levels.name": "  Skill Levels",
+    "config.enable-skill-levels.desc": "Raise individual skill levels.",
+    "config.enable-professions.name": "  Professions",
+    "config.enable-professions.desc": "Change profession choices.",
+
+    // Relationships
+    "config.enable-relationships.name": "Enable Relationships",
+    "config.enable-relationships.desc": "Master toggle — turns off the entire Relationships tab.",
+    "config.enable-give-gifts-anytime.name": "  Give Gifts Anytime",
+    "config.enable-give-gifts-anytime.desc": "Remove the weekly gift limit.",
+    "config.enable-no-friendship-decay.name": "  No Friendship Decay",
+    "config.enable-no-friendship-decay.desc": "Friendship points don't drop over time.",
+    "config.enable-adjust-friendship-levels.name": "  Adjust Friendship Levels",
+    "config.enable-adjust-friendship-levels.desc": "Per-NPC heart level sliders.",
+
+    // Time
+    "config.enable-time.name": "Enable Time",
+    "config.enable-time.desc": "Freeze time, set time of day, day, season, and year.",
+
+    // Warps
+    "config.enable-warps.name": "Enable Warps",
+    "config.enable-warps.desc": "Master toggle — turns off the entire Warps tab.",
+    "config.enforce-warp-progression.name": "  Enforce Progression Restrictions",
+    "config.enforce-warp-progression.desc": "Warp sections only appear after you've unlocked them in-game (e.g., boat repair for Ginger Island). Default: OFF.",
+    "config.enable-warp-section-main.name": "  Main Locations",
+    "config.enable-warp-section-main.desc": "Farm, Mines, and other main-area warps.",
+    "config.enable-warp-section-town.name": "  Town",
+    "config.enable-warp-section-town.desc": "Town-area warps.",
+    "config.enable-warp-section-forest.name": "  Forest",
+    "config.enable-warp-section-forest.desc": "Forest-area warps.",
+    "config.enable-warp-section-mountain.name": "  Mountain",
+    "config.enable-warp-section-mountain.desc": "Mountain-area warps.",
+    "config.enable-warp-section-beach.name": "  Beach",
+    "config.enable-warp-section-beach.desc": "Beach-area warps.",
+    "config.enable-warp-section-desert.name": "  Desert",
+    "config.enable-warp-section-desert.desc": "Desert warps.",
+    "config.enable-warp-section-island.name": "  Ginger Island",
+    "config.enable-warp-section-island.desc": "Ginger Island warps.",
+
+    // Weather
+    "config.enable-weather.name": "Enable Weather",
+    "config.enable-weather.desc": "Set the weather for tomorrow.",
+
+    // Advanced
+    "config.enable-advanced.name": "Enable Advanced",
+    "config.enable-advanced.desc": "Master toggle — turns off the entire Advanced tab.",
+    "config.enable-complete-quests.name": "  Complete Quests",
+    "config.enable-complete-quests.desc": "Instantly complete or cancel quests/special orders.",
+    "config.enable-wallet-items.name": "  Wallet Items",
+    "config.enable-wallet-items.desc": "Add special items to your wallet.",
+    "config.enable-unlocked-areas.name": "  Unlocked Areas",
+    "config.enable-unlocked-areas.desc": "Unlock doors and NPC areas.",
+    "config.enable-unlocked-content.name": "  Unlocked Content",
+    "config.enable-unlocked-content.desc": "Unlock tailoring, Junimo text, perfection tracker.",
+    "config.enable-community-center.name": "  Community Center",
+    "config.enable-community-center.desc": "Complete or reset Community Center bundles / Joja purchases."
 }

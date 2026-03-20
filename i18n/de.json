@@ -240,5 +240,99 @@
     "config.title.other-options": "Andere Einstellungen",
     "config.default-tab.name": "Stanard-Reiter",
     "config.default-tab.desc": "Der Reiter, der standardmäßig im Menü geöffnet wird.",
-    "config.other-options": "Um Cheats zu konfigurieren, drücke 'Menü öffnen'-Taste, die oben im Spiel angezeigt wird.Stelle sicher, dass du die Taste drückst , nachdem du den Spielstand geladen hast und kein anderes Menü oder Dialog geöffnet ist."
+    "config.other-options": "Um Cheats zu konfigurieren, drücke 'Menü öffnen'-Taste, die oben im Spiel angezeigt wird.Stelle sicher, dass du die Taste drückst , nachdem du den Spielstand geladen hast und kein anderes Menü oder Dialog geöffnet ist.",
+
+
+    /*********
+    ** Generic Mod Config Menu — Category Toggles
+    *********/
+    "config.category-toggles.note": "All changes take effect at the title screen. Turning a section OFF hides it from the in-game cheats menu.", // TODO
+
+    // Player & Tools
+    "config.enable-player-and-tools.name": "Enable Player & Tools", // TODO
+    "config.enable-player-and-tools.desc": "Master toggle — turns off the entire Player & Tools tab.", // TODO
+    "config.enable-player-stats.name": "  Player Stats", // TODO
+    "config.enable-player-stats.desc": "Health, stamina, speed, luck, one-hit kill, inventory size, cooldowns.", // TODO
+    "config.enable-tools.name": "  Tools", // TODO
+    "config.enable-tools.desc": "One-hit break, infinite water, harvest with scythe.", // TODO
+    "config.enable-tool-enchantments.name": "  Tool Enchantments", // TODO
+    "config.enable-tool-enchantments.desc": "Apply enchantments to tools.", // TODO
+    "config.enable-add-money.name": "  Add Money", // TODO
+    "config.enable-add-money.desc": "Add gold to your wallet.", // TODO
+    "config.enable-add-casino-coins.name": "  Add Casino Coins", // TODO
+    "config.enable-add-casino-coins.desc": "Add Qi coins.", // TODO
+    "config.enable-add-golden-walnuts.name": "  Add Golden Walnuts", // TODO
+    "config.enable-add-golden-walnuts.desc": "Add Golden Walnuts.", // TODO
+    "config.enable-add-qi-gems.name": "  Add Qi Gems", // TODO
+    "config.enable-add-qi-gems.desc": "Add Qi Gems.", // TODO
+
+    // Farm & Fishing
+    "config.enable-farm-and-fishing.name": "Enable Farm & Fishing", // TODO
+    "config.enable-farm-and-fishing.desc": "Master toggle — turns off the entire Farm & Fishing tab.", // TODO
+    "config.enable-farm.name": "  Farm", // TODO
+    "config.enable-farm.desc": "Auto-water, fences, instant build, animals, hay.", // TODO
+    "config.enable-fishing.name": "  Fishing", // TODO
+    "config.enable-fishing.desc": "Instant catch/bite, distance, tackle, treasure.", // TODO
+    "config.enable-fast-machines.name": "  Fast Machine Processing", // TODO
+    "config.enable-fast-machines.desc": "All machines finish instantly.", // TODO
+
+    // Skills
+    "config.enable-skills.name": "Enable Skills", // TODO
+    "config.enable-skills.desc": "Master toggle — turns off the entire Skills tab.", // TODO
+    "config.enable-skill-levels.name": "  Skill Levels", // TODO
+    "config.enable-skill-levels.desc": "Raise individual skill levels.", // TODO
+    "config.enable-professions.name": "  Professions", // TODO
+    "config.enable-professions.desc": "Change profession choices.", // TODO
+
+    // Relationships
+    "config.enable-relationships.name": "Enable Relationships", // TODO
+    "config.enable-relationships.desc": "Master toggle — turns off the entire Relationships tab.", // TODO
+    "config.enable-give-gifts-anytime.name": "  Give Gifts Anytime", // TODO
+    "config.enable-give-gifts-anytime.desc": "Remove the weekly gift limit.", // TODO
+    "config.enable-no-friendship-decay.name": "  No Friendship Decay", // TODO
+    "config.enable-no-friendship-decay.desc": "Friendship points don't drop over time.", // TODO
+    "config.enable-adjust-friendship-levels.name": "  Adjust Friendship Levels", // TODO
+    "config.enable-adjust-friendship-levels.desc": "Per-NPC heart level sliders.", // TODO
+
+    // Time
+    "config.enable-time.name": "Enable Time", // TODO
+    "config.enable-time.desc": "Freeze time, set time of day, day, season, and year.", // TODO
+
+    // Warps
+    "config.enable-warps.name": "Enable Warps", // TODO
+    "config.enable-warps.desc": "Master toggle — turns off the entire Warps tab.", // TODO
+    "config.enforce-warp-progression.name": "  Enforce Progression Restrictions", // TODO
+    "config.enforce-warp-progression.desc": "Warp sections only appear after you've unlocked them in-game (e.g., boat repair for Ginger Island). Default: OFF.", // TODO
+    "config.enable-warp-section-main.name": "  Main Locations", // TODO
+    "config.enable-warp-section-main.desc": "Farm, Mines, and other main-area warps.", // TODO
+    "config.enable-warp-section-town.name": "  Town", // TODO
+    "config.enable-warp-section-town.desc": "Town-area warps.", // TODO
+    "config.enable-warp-section-forest.name": "  Forest", // TODO
+    "config.enable-warp-section-forest.desc": "Forest-area warps.", // TODO
+    "config.enable-warp-section-mountain.name": "  Mountain", // TODO
+    "config.enable-warp-section-mountain.desc": "Mountain-area warps.", // TODO
+    "config.enable-warp-section-beach.name": "  Beach", // TODO
+    "config.enable-warp-section-beach.desc": "Beach-area warps.", // TODO
+    "config.enable-warp-section-desert.name": "  Desert", // TODO
+    "config.enable-warp-section-desert.desc": "Desert warps.", // TODO
+    "config.enable-warp-section-island.name": "  Ginger Island", // TODO
+    "config.enable-warp-section-island.desc": "Ginger Island warps.", // TODO
+
+    // Weather
+    "config.enable-weather.name": "Enable Weather", // TODO
+    "config.enable-weather.desc": "Set the weather for tomorrow.", // TODO
+
+    // Advanced
+    "config.enable-advanced.name": "Enable Advanced", // TODO
+    "config.enable-advanced.desc": "Master toggle — turns off the entire Advanced tab.", // TODO
+    "config.enable-complete-quests.name": "  Complete Quests", // TODO
+    "config.enable-complete-quests.desc": "Instantly complete or cancel quests/special orders.", // TODO
+    "config.enable-wallet-items.name": "  Wallet Items", // TODO
+    "config.enable-wallet-items.desc": "Add special items to your wallet.", // TODO
+    "config.enable-unlocked-areas.name": "  Unlocked Areas", // TODO
+    "config.enable-unlocked-areas.desc": "Unlock doors and NPC areas.", // TODO
+    "config.enable-unlocked-content.name": "  Unlocked Content", // TODO
+    "config.enable-unlocked-content.desc": "Unlock tailoring, Junimo text, perfection tracker.", // TODO
+    "config.enable-community-center.name": "  Community Center", // TODO
+    "config.enable-community-center.desc": "Complete or reset Community Center bundles / Joja purchases." // TODO
 }

@@ -92,76 +92,76 @@ internal class GenericModConfigMenuIntegration
         // Each category has a master ON/OFF toggle.
         // Categories that have named sections also list those section toggles directly below.
         // Turning off a section hides it from the in-game menu without disabling its category.
-        menu.AddParagraph(this.Manifest, () => "All changes take effect at the title screen. Turning a section OFF hides it from the in-game cheats menu.");
+        menu.AddParagraph(this.Manifest, I18n.Config_CategoryToggles_Note);
 
         // ── Player & Tools ────────────────────────────────────────────────────
-        menu.AddSectionTitle(this.Manifest, () => "Player & Tools");
+        menu.AddSectionTitle(this.Manifest, I18n.Tabs_PlayerAndTools);
         menu.AddBoolOption(this.Manifest, () => this.Config.EnablePlayerAndTools, v => this.Config.EnablePlayerAndTools = v,
-            () => "Enable Player & Tools", () => "Master toggle — turns off the entire Player & Tools tab.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnablePlayerStats,        v => this.Config.EnablePlayerStats        = v, () => "  Player Stats",        () => "Health, stamina, speed, luck, one-hit kill, inventory size, cooldowns.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableTools,              v => this.Config.EnableTools              = v, () => "  Tools",              () => "One-hit break, infinite water, harvest with scythe.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableToolEnchantments,   v => this.Config.EnableToolEnchantments   = v, () => "  Tool Enchantments", () => "Apply enchantments to tools.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddMoney,           v => this.Config.EnableAddMoney           = v, () => "  Add Money",          () => "Add gold to your wallet.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddCasinoCoins,     v => this.Config.EnableAddCasinoCoins     = v, () => "  Add Casino Coins",   () => "Add Qi coins.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddGoldenWalnuts,   v => this.Config.EnableAddGoldenWalnuts   = v, () => "  Add Golden Walnuts", () => "Add Golden Walnuts.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddQiGems,          v => this.Config.EnableAddQiGems          = v, () => "  Add Qi Gems",        () => "Add Qi Gems.");
+            I18n.Config_EnablePlayerAndTools_Name, I18n.Config_EnablePlayerAndTools_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnablePlayerStats,        v => this.Config.EnablePlayerStats        = v, I18n.Config_EnablePlayerStats_Name,        I18n.Config_EnablePlayerStats_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableTools,              v => this.Config.EnableTools              = v, I18n.Config_EnableTools_Name,              I18n.Config_EnableTools_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableToolEnchantments,   v => this.Config.EnableToolEnchantments   = v, I18n.Config_EnableToolEnchantments_Name,   I18n.Config_EnableToolEnchantments_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddMoney,           v => this.Config.EnableAddMoney           = v, I18n.Config_EnableAddMoney_Name,           I18n.Config_EnableAddMoney_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddCasinoCoins,     v => this.Config.EnableAddCasinoCoins     = v, I18n.Config_EnableAddCasinoCoins_Name,     I18n.Config_EnableAddCasinoCoins_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddGoldenWalnuts,   v => this.Config.EnableAddGoldenWalnuts   = v, I18n.Config_EnableAddGoldenWalnuts_Name,   I18n.Config_EnableAddGoldenWalnuts_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAddQiGems,          v => this.Config.EnableAddQiGems          = v, I18n.Config_EnableAddQiGems_Name,          I18n.Config_EnableAddQiGems_Desc);
 
         // ── Farm & Fishing ────────────────────────────────────────────────────
-        menu.AddSectionTitle(this.Manifest, () => "Farm & Fishing");
+        menu.AddSectionTitle(this.Manifest, I18n.Tabs_FarmAndFishing);
         menu.AddBoolOption(this.Manifest, () => this.Config.EnableFarmAndFishing, v => this.Config.EnableFarmAndFishing = v,
-            () => "Enable Farm & Fishing", () => "Master toggle — turns off the entire Farm & Fishing tab.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableFarm,           v => this.Config.EnableFarm           = v, () => "  Farm",                    () => "Auto-water, fences, instant build, animals, hay.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableFishing,        v => this.Config.EnableFishing        = v, () => "  Fishing",                  () => "Instant catch/bite, distance, tackle, treasure.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableFastMachines,   v => this.Config.EnableFastMachines   = v, () => "  Fast Machine Processing",   () => "All machines finish instantly.");
+            I18n.Config_EnableFarmAndFishing_Name, I18n.Config_EnableFarmAndFishing_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableFarm,           v => this.Config.EnableFarm           = v, I18n.Config_EnableFarm_Name,           I18n.Config_EnableFarm_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableFishing,        v => this.Config.EnableFishing        = v, I18n.Config_EnableFishing_Name,        I18n.Config_EnableFishing_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableFastMachines,   v => this.Config.EnableFastMachines   = v, I18n.Config_EnableFastMachines_Name,   I18n.Config_EnableFastMachines_Desc);
 
         // ── Skills ────────────────────────────────────────────────────────────
-        menu.AddSectionTitle(this.Manifest, () => "Skills");
+        menu.AddSectionTitle(this.Manifest, I18n.Tabs_Skills);
         menu.AddBoolOption(this.Manifest, () => this.Config.EnableSkills, v => this.Config.EnableSkills = v,
-            () => "Enable Skills", () => "Master toggle — turns off the entire Skills tab.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableSkillLevels,  v => this.Config.EnableSkillLevels  = v, () => "  Skill Levels",  () => "Raise individual skill levels.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableProfessions,  v => this.Config.EnableProfessions  = v, () => "  Professions",   () => "Change profession choices.");
+            I18n.Config_EnableSkills_Name, I18n.Config_EnableSkills_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableSkillLevels,  v => this.Config.EnableSkillLevels  = v, I18n.Config_EnableSkillLevels_Name,  I18n.Config_EnableSkillLevels_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableProfessions,  v => this.Config.EnableProfessions  = v, I18n.Config_EnableProfessions_Name,  I18n.Config_EnableProfessions_Desc);
 
         // ── Relationships ─────────────────────────────────────────────────────
-        menu.AddSectionTitle(this.Manifest, () => "Relationships");
+        menu.AddSectionTitle(this.Manifest, I18n.Tabs_Relationships);
         menu.AddBoolOption(this.Manifest, () => this.Config.EnableRelationships, v => this.Config.EnableRelationships = v,
-            () => "Enable Relationships", () => "Master toggle — turns off the entire Relationships tab.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableGiveGiftsAnytime,       v => this.Config.EnableGiveGiftsAnytime       = v, () => "  Give Gifts Anytime",        () => "Remove the weekly gift limit.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableNoFriendshipDecay,      v => this.Config.EnableNoFriendshipDecay      = v, () => "  No Friendship Decay",       () => "Friendship points don't drop over time.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAdjustFriendshipLevels, v => this.Config.EnableAdjustFriendshipLevels = v, () => "  Adjust Friendship Levels",  () => "Per-NPC heart level sliders.");
+            I18n.Config_EnableRelationships_Name, I18n.Config_EnableRelationships_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableGiveGiftsAnytime,       v => this.Config.EnableGiveGiftsAnytime       = v, I18n.Config_EnableGiveGiftsAnytime_Name,       I18n.Config_EnableGiveGiftsAnytime_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableNoFriendshipDecay,      v => this.Config.EnableNoFriendshipDecay      = v, I18n.Config_EnableNoFriendshipDecay_Name,      I18n.Config_EnableNoFriendshipDecay_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableAdjustFriendshipLevels, v => this.Config.EnableAdjustFriendshipLevels = v, I18n.Config_EnableAdjustFriendshipLevels_Name, I18n.Config_EnableAdjustFriendshipLevels_Desc);
 
         // ── Time ──────────────────────────────────────────────────────────────
-        menu.AddSectionTitle(this.Manifest, () => "Time");
+        menu.AddSectionTitle(this.Manifest, I18n.Tabs_Time);
         menu.AddBoolOption(this.Manifest, () => this.Config.EnableTime, v => this.Config.EnableTime = v,
-            () => "Enable Time", () => "Freeze time, set time of day, day, season, and year.");
+            I18n.Config_EnableTime_Name, I18n.Config_EnableTime_Desc);
 
         // ── Warps ─────────────────────────────────────────────────────────────
-        menu.AddSectionTitle(this.Manifest, () => "Warps");
+        menu.AddSectionTitle(this.Manifest, I18n.Tabs_Warp);
         menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarps, v => this.Config.EnableWarps = v,
-            () => "Enable Warps", () => "Master toggle — turns off the entire Warps tab.");
+            I18n.Config_EnableWarps_Name, I18n.Config_EnableWarps_Desc);
         menu.AddBoolOption(this.Manifest, () => this.Config.EnforceWarpProgressionRestrictions, v => this.Config.EnforceWarpProgressionRestrictions = v,
-            () => "  Enforce Progression Restrictions", () => "Warp sections only appear after you've unlocked them in-game (e.g., boat repair for Ginger Island). Default: OFF.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionMain,     v => this.Config.EnableWarpSectionMain     = v, () => "  Main Locations",  () => "Farm, Mines, and other main-area warps.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionTown,     v => this.Config.EnableWarpSectionTown     = v, () => "  Town",            () => "Town-area warps.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionForest,   v => this.Config.EnableWarpSectionForest   = v, () => "  Forest",          () => "Forest-area warps.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionMountain, v => this.Config.EnableWarpSectionMountain = v, () => "  Mountain",        () => "Mountain-area warps.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionBeach,    v => this.Config.EnableWarpSectionBeach    = v, () => "  Beach",           () => "Beach-area warps.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionDesert,   v => this.Config.EnableWarpSectionDesert   = v, () => "  Desert",          () => "Desert warps.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionIsland,   v => this.Config.EnableWarpSectionIsland   = v, () => "  Ginger Island",   () => "Ginger Island warps.");
+            I18n.Config_EnforceWarpProgression_Name, I18n.Config_EnforceWarpProgression_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionMain,     v => this.Config.EnableWarpSectionMain     = v, I18n.Config_EnableWarpSectionMain_Name,     I18n.Config_EnableWarpSectionMain_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionTown,     v => this.Config.EnableWarpSectionTown     = v, I18n.Config_EnableWarpSectionTown_Name,     I18n.Config_EnableWarpSectionTown_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionForest,   v => this.Config.EnableWarpSectionForest   = v, I18n.Config_EnableWarpSectionForest_Name,   I18n.Config_EnableWarpSectionForest_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionMountain, v => this.Config.EnableWarpSectionMountain = v, I18n.Config_EnableWarpSectionMountain_Name, I18n.Config_EnableWarpSectionMountain_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionBeach,    v => this.Config.EnableWarpSectionBeach    = v, I18n.Config_EnableWarpSectionBeach_Name,    I18n.Config_EnableWarpSectionBeach_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionDesert,   v => this.Config.EnableWarpSectionDesert   = v, I18n.Config_EnableWarpSectionDesert_Name,   I18n.Config_EnableWarpSectionDesert_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWarpSectionIsland,   v => this.Config.EnableWarpSectionIsland   = v, I18n.Config_EnableWarpSectionIsland_Name,   I18n.Config_EnableWarpSectionIsland_Desc);
 
         // ── Weather ───────────────────────────────────────────────────────────
-        menu.AddSectionTitle(this.Manifest, () => "Weather");
+        menu.AddSectionTitle(this.Manifest, I18n.Tabs_Weather);
         menu.AddBoolOption(this.Manifest, () => this.Config.EnableWeather, v => this.Config.EnableWeather = v,
-            () => "Enable Weather", () => "Set the weather for tomorrow.");
+            I18n.Config_EnableWeather_Name, I18n.Config_EnableWeather_Desc);
 
         // ── Advanced ──────────────────────────────────────────────────────────
-        menu.AddSectionTitle(this.Manifest, () => "Advanced");
+        menu.AddSectionTitle(this.Manifest, I18n.Tabs_Advanced);
         menu.AddBoolOption(this.Manifest, () => this.Config.EnableAdvanced, v => this.Config.EnableAdvanced = v,
-            () => "Enable Advanced", () => "Master toggle — turns off the entire Advanced tab.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableCompleteQuests,   v => this.Config.EnableCompleteQuests   = v, () => "  Complete Quests",   () => "Instantly complete or cancel quests/special orders.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWalletItems,      v => this.Config.EnableWalletItems      = v, () => "  Wallet Items",      () => "Add special items to your wallet.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableUnlockedAreas,    v => this.Config.EnableUnlockedAreas    = v, () => "  Unlocked Areas",    () => "Unlock doors and NPC areas.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableUnlockedContent,  v => this.Config.EnableUnlockedContent  = v, () => "  Unlocked Content",  () => "Unlock tailoring, Junimo text, perfection tracker.");
-        menu.AddBoolOption(this.Manifest, () => this.Config.EnableCommunityCenter,  v => this.Config.EnableCommunityCenter  = v, () => "  Community Center",  () => "Complete or reset Community Center bundles / Joja purchases.");
+            I18n.Config_EnableAdvanced_Name, I18n.Config_EnableAdvanced_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableCompleteQuests,   v => this.Config.EnableCompleteQuests   = v, I18n.Config_EnableCompleteQuests_Name,   I18n.Config_EnableCompleteQuests_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableWalletItems,      v => this.Config.EnableWalletItems      = v, I18n.Config_EnableWalletItems_Name,      I18n.Config_EnableWalletItems_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableUnlockedAreas,    v => this.Config.EnableUnlockedAreas    = v, I18n.Config_EnableUnlockedAreas_Name,    I18n.Config_EnableUnlockedAreas_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableUnlockedContent,  v => this.Config.EnableUnlockedContent  = v, I18n.Config_EnableUnlockedContent_Name,  I18n.Config_EnableUnlockedContent_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.EnableCommunityCenter,  v => this.Config.EnableCommunityCenter  = v, I18n.Config_EnableCommunityCenter_Name,  I18n.Config_EnableCommunityCenter_Desc);
 
         // ── Other options ──────────────────────────────────────────────────────
         menu.AddSectionTitle(this.Manifest, I18n.Config_Title_OtherOptions);
