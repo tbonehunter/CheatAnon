@@ -2,7 +2,7 @@
 
 **CJB Cheats Menu with a built-in sponsor for accountability**
 
-Cheaters Anonymous is a modified version of [CJB Cheats Menu](https://www.nexusmods.com/stardewvalley/mods/4) by CJBok and Pathoschild. Nearly all cheat functionality is theirs. This mod adds one thing: **granular control over which cheats are accessible in-game**, plus warp hotkeys and a dedicated Go button for warp locations.
+Cheaters Anonymous is a modified version of [CJB Cheats Menu](https://www.nexusmods.com/stardewvalley/mods/4) by CJBok and Pathoschild. Nearly all cheat functionality is theirs. This mod adds two things: **granular control over which cheats are accessible in-game**, and the ability to set warp hotkeys and a dedicated Go button for warp locations.
 
 If you want the full, unmodified cheats experience, use the original CJB Cheats Menu. Cheaters Anonymous is for players who want to keep some cheats available while locking others away from themselves.
 
@@ -53,17 +53,16 @@ Within each category, individual subcategories can also be toggled. For example,
 
 ### Warp Progression Restrictions
 
-An optional master toggle — **Enforce Warp Progression Restrictions** — limits which warp destinations are available based on your in-game progress. When enabled:
+An optional master toggle — **Enforce Warp Progression Restrictions** — limits which warp destinations are available based on your in-game progress. When enabled, warping to any location defined in CJB Cheats Menu will be available ONLY when the conditions required to access that location through vanilla means have been met. For example:
 
 | Destination | Requirement |
 |---|---|
 | Desert | Vault bundles complete or Joja membership |
-| Ginger Island (all locations) | Willy's boat repaired |
+| Ginger Island (Leo's House) | Willy's boat repaired |
 | Secret Woods | Steel Axe or better |
 | Sewer | Rusty Key in wallet |
 | Mutant Bug Lair | Rusty Key + Dark Talisman quest complete |
-| Wizard Tower | Community Center entered |
-| Railroad / Bathhouse / Witch's Swamp | Summer 3, Year 1 or later |
+| Railroad / Bathhouse | Summer 3, Year 1 or later |
 | Quarry | Crafts Room bundles or Joja membership |
 | Mastery Cave | Mastery level reached |
 
