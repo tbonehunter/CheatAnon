@@ -40,7 +40,7 @@ Each of the eight cheat categories can be independently enabled or disabled. Whe
 | Farm & Fishing | Auto-feed/pet/water, fast machines, durable fences/tackles |
 | Player & Tools | Infinite health/stamina, move speed, one-hit kill/break, enchantments |
 | Relationships | Gift limits, friendship hearts, friendship decay |
-| Skills | Skill levels, professions |
+| Skills | Skill levels (increase and decrease), professions |
 | Time | Freeze time, set time/day/season/year |
 | Warps | Warp to locations with Go button and hotkey binding |
 | Weather | Set tomorrow's weather |
@@ -50,6 +50,19 @@ All categories are **enabled by default**, so the mod works identically to the o
 ### Subcategory Toggles
 
 Within each category, individual subcategories can also be toggled. For example, within Player & Tools you can enable Player Stats while disabling the Add Money buttons.
+
+### Skill Regression
+
+The Skills tab includes **Decrease** buttons alongside the existing Increase buttons for each skill. These are disabled by default and must be explicitly enabled in GMCM **from the title screen**.
+
+| GMCM Option | Default | Description |
+|---|---|---|
+| Allow Skill Regression | Off | Enables the Decrease buttons in the Skills tab. When off, the buttons are visible but grayed out. |
+| Strip Invalid Professions on Regression | Off | When a skill is lowered below level 5 or 10, automatically removes the professions that were unlocked at those tiers. Disable to keep professions despite no longer meeting the level requirement. |
+
+> **Note:** Both options are under the Skills section in GMCM and can only be changed from the title screen, consistent with all other category settings in this mod.
+
+> **Warning:** Skill regression has real in-game consequences — lowering Combat below 5 removes the Fighter health bonus, for example. Use with full knowledge of the risks.
 
 ### Warp Progression Restrictions
 
@@ -94,4 +107,4 @@ Press **P** in-game (default) to open the cheats menu. The key can be changed in
 ## Credits
 
 - **CJBok and Pathoschild** — original [CJB Cheats Menu](https://www.nexusmods.com/stardewvalley/mods/4), which provides all cheat functionality in this mod
-- **tbonehunter** — category toggles, subcategory toggles, warp hotkeys, Go button, progression restrictions
+- **tbonehunter** — category toggles, subcategory toggles, warp hotkeys, Go button, progression restrictions, skill regression

@@ -124,6 +124,15 @@ internal class ModConfig
     public bool EnableProfessions { get; set; } = true;
 
     /****
+    ** Skill regression
+    ****/
+    /// <summary>Whether skill levels can be decreased in the Skills tab. When false, the decrease buttons are shown but disabled.</summary>
+    public bool AllowSkillRegression { get; set; } = false;
+
+    /// <summary>When skill regression is applied, whether professions unlocked at stripped tiers (levels 5 and 10) are automatically removed.</summary>
+    public bool StripInvalidProfessions { get; set; } = false;
+
+    /****
     ** Subcategory toggles - Relationships
     ****/
     /// <summary>Whether to show the Give Gifts Anytime option.</summary>

@@ -86,6 +86,7 @@
     // skills
     "skills.title": "Skills",
     "skills.increase-skill": "Increase {{skillName}} level: {{currentLevel}}",
+    "skills.decrease-skill": "Decrease {{skillName}} level: {{currentLevel}}",
 
     // professions
     "professions.title": "Professions",
@@ -283,6 +284,18 @@
     "config.enable-skill-levels.desc": "Raise individual skill levels.",
     "config.enable-professions.name": "  Professions",
     "config.enable-professions.desc": "Change profession choices.",
+    "config.allow-skill-regression.name": "  Allow Skill Regression",
+    "config.allow-skill-regression.desc": "When enabled, skill levels can be lowered in the Skills tab. WARNING: regression has significant in-game consequences — use with full knowledge of the risks.",
+    "config.strip-invalid-professions.name": "  Strip Invalid Professions on Regression",
+    "config.strip-invalid-professions.desc": "When a skill is regressed below level 5 or 10, automatically remove the professions unlocked at those tiers.",
+
+    // skill/XP sync messages (shown if a level/XP mismatch is detected on save load)
+    "skills.sync.question": "Skill/XP mismatch detected: {{details}}. How would you like to resolve this?",
+    "skills.sync.keep-levels": "Keep skill levels, adjust XP to match",
+    "skills.sync.keep-xp": "Keep XP values, adjust skill levels to match",
+    "skills.sync.ignore": "Ignore (do nothing)",
+    "skills.sync.fixed-xp": "XP values adjusted to match skill levels.",
+    "skills.sync.fixed-levels": "Skill levels adjusted to match XP values.",
 
     // Relationships
     "config.enable-relationships.name": "Enable Relationships",

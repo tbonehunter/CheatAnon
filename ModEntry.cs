@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using CJB.Common;
 using CJBCheatsMenu.Framework;
+using CJBCheatsMenu.Framework.Cheats.Skills;
 using CJBCheatsMenu.Framework.Cheats.Warps;
 using CJBCheatsMenu.Framework.Components;
 using CJBCheatsMenu.Framework.Models;
@@ -34,6 +36,9 @@ internal class ModEntry : Mod
 
     /// <summary>The known in-game location.</summary>
     private readonly PerScreen<Lazy<GameLocation[]>> Locations = new(ModEntry.GetLocationsForCache);
+
+    /// <summary>Whether to run the skill/XP mismatch check on the next game tick.</summary>
+    private bool CheckSkillSyncOnNextTick;
 
 
     /*********
@@ -99,6 +104,11 @@ internal class ModEntry : Mod
     {
         this.ResetLocationCache();
         this.Cheats.Value.OnSaveLoaded();
+
+        // If skill regression is enabled, schedule a check for level/XP mismatches.
+        // This catches saves that were edited externally or came from the standalone SetSkillLevels mod.
+        if (this.Config.AllowSkillRegression)
+            this.CheckSkillSyncOnNextTick = true;
     }
 
     /// <inheritdoc cref="IGameLoopEvents.ReturnedToTitle" />
@@ -187,12 +197,82 @@ internal class ModEntry : Mod
             return;
 
         this.Cheats.Value.OnUpdateTicked(e);
-    }
+        // Deferred skill/XP sync check — wait until the world is ready and no menu is open.
+        if (this.CheckSkillSyncOnNextTick && Game1.activeClickableMenu is null)
+        {
+            this.CheckSkillSyncOnNextTick = false;
+            this.CheckForSkillXpMismatch();
+        }    }
 
     /// <inheritdoc cref="IGameLoopEvents.Saving"/>
     private void OnSaving(object? sender, SavingEventArgs e)
     {
         this.Cheats.Value.OnSaving();
+    }
+
+    /// <summary>Check whether any skill's stored level disagrees with what its XP implies, and offer to fix the mismatch.</summary>
+    private void CheckForSkillXpMismatch()
+    {
+        var mismatches = new List<(int SkillId, string Name, int ActualLevel, int XpLevel)>();
+
+        (string Name, int Id)[] skills =
+        [
+            ("Farming", 0), ("Fishing", 1), ("Foraging", 2), ("Mining", 3), ("Combat", 4)
+        ];
+
+        foreach (var (name, id) in skills)
+        {
+            int actualLevel = Game1.player.GetSkillLevel(id);
+            int xp          = Game1.player.experiencePoints[id];
+            int xpLevel     = SkillsCheat.LevelFromXp(xp);
+
+            if (actualLevel != xpLevel)
+                mismatches.Add((id, name, actualLevel, xpLevel));
+        }
+
+        if (mismatches.Count == 0)
+            return;
+
+        string details  = string.Join(", ", mismatches.ConvertAll(m =>
+            $"{m.Name}: Level {m.ActualLevel} but XP implies Level {m.XpLevel}"));
+        string question = I18n.Skills_Sync_Question(details: details);
+
+        Game1.currentLocation.createQuestionDialogue(
+            question,
+            [
+                new Response("keepLevel", I18n.Skills_Sync_KeepLevels()),
+                new Response("keepXp",    I18n.Skills_Sync_KeepXp()),
+                new Response("ignore",    I18n.Skills_Sync_Ignore()),
+            ],
+            (who, answer) =>
+            {
+                switch (answer)
+                {
+                    case "keepLevel":
+                        foreach (var m in mismatches)
+                        {
+                            Game1.player.experiencePoints[m.SkillId] =
+                                SkillsCheat.CumulativeXpAtLevel[m.ActualLevel];
+                            this.Monitor.Log($"Synced {m.Name} XP to match level {m.ActualLevel}.", LogLevel.Info);
+                        }
+                        Game1.addHUDMessage(new HUDMessage(I18n.Skills_Sync_FixedXp()));
+                        break;
+
+                    case "keepXp":
+                        foreach (var m in mismatches)
+                        {
+                            SkillsCheat.SetSkillLevel(Game1.player, m.SkillId, m.XpLevel);
+                            this.Monitor.Log($"Synced {m.Name} level to {m.XpLevel} (from XP).", LogLevel.Info);
+                        }
+                        Game1.addHUDMessage(new HUDMessage(I18n.Skills_Sync_FixedLevels()));
+                        break;
+
+                    case "ignore":
+                        this.Monitor.Log("User chose to ignore skill/XP mismatch.", LogLevel.Info);
+                        break;
+                }
+            }
+        );
     }
 
     /// <inheritdoc cref="IDisplayEvents.MenuChanged"/>

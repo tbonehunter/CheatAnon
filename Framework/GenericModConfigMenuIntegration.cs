@@ -120,6 +120,8 @@ internal class GenericModConfigMenuIntegration
             I18n.Config_EnableSkills_Name, I18n.Config_EnableSkills_Desc);
         menu.AddBoolOption(this.Manifest, () => this.Config.EnableSkillLevels,  v => this.Config.EnableSkillLevels  = v, I18n.Config_EnableSkillLevels_Name,  I18n.Config_EnableSkillLevels_Desc);
         menu.AddBoolOption(this.Manifest, () => this.Config.EnableProfessions,  v => this.Config.EnableProfessions  = v, I18n.Config_EnableProfessions_Name,  I18n.Config_EnableProfessions_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.AllowSkillRegression,    v => this.Config.AllowSkillRegression    = v, I18n.Config_AllowSkillRegression_Name,    I18n.Config_AllowSkillRegression_Desc);
+        menu.AddBoolOption(this.Manifest, () => this.Config.StripInvalidProfessions, v => this.Config.StripInvalidProfessions = v, I18n.Config_StripInvalidProfessions_Name, I18n.Config_StripInvalidProfessions_Desc);
 
         // ── Relationships ─────────────────────────────────────────────────────
         menu.AddSectionTitle(this.Manifest, I18n.Tabs_Relationships);
